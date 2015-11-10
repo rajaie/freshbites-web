@@ -1,0 +1,11 @@
+<div>
+    <h2>Homepage</h2>
+    <div>
+        <input type="text" ng-model="name" />
+        <ul>
+          <li ng-repeat="cust in customers | filter:name">
+            {{ cust.name }} - {{ cust.city }}
+          </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div>
+    <h2>Register</h2>
+    <div>
+        Search: <input type="text" ng-model="name" />
+        <ul>
+          <li ng-repeat="cust in customers | filter:name | orderBy: 'city' ">
+            {{ cust.name }} - {{ cust.city }}
+          </li>
+        </ul>
+    </div>
+    <div>
+        Enter your
+        <br />
+        <label>name:</label>
+        <br />
+        <input type="text" ng-model="newName" />
+        <br />
+        <label>city:</label>
+        <br />
+        <input type="text" ng-model="newCity" />
+        <br />
+        <button ng-click="register()">Add Customer</button>
+    </div>
+</div>

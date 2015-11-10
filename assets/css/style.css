@@ -1,0 +1,10 @@
+.logo {
+    height: 120px;
+    margin: 10px 0;
+    width: auto;
+}
+
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}

@@ -1,0 +1,9 @@
+<p>All menus listed here</p>
+
+<ul>
+    <li><a ui-sref="menus.detail">Testing</a></li>
+    <li>One two three</li>
+    <li ng-repeat="menu in menus">
+    <a ui-sref="menu.detail({menuID:menu.id})">{{menu.name}}</a>
+  </li>
+</ul>

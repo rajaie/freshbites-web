@@ -1,7 +1,16 @@
 .logo {
     height: 120px;
-    margin: 10px 0;
+    display: block;
+    margin: 10px auto;
     width: auto;
+}
+
+.nav>li>a:focus {
+
+}
+
+.navbar-top {
+
 }
 
 .done-true {

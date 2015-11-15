@@ -1,6 +1,5 @@
 var myApp = angular.module('myApp', ['ui.router']);
 
-
 // ******
 // Routes
 // ******
@@ -9,8 +8,6 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.html5Mode({
         enabled: true
     });
-
-    $urlRouterProvider.otherwise("/");
 
     $stateProvider
     .state('default', {
@@ -50,31 +47,32 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     })
     .state('menus', {
       url: "/menus",
+      abstract: true,
       templateUrl: "views/menus.html",
-      controller: 'SimpleController',
+      resolve: {
+            menus: function(menusFactory){
+                return menusFactory.all();
+            }
+        },
+      controller: 'MenusController',
+    })
+    .state('menus.list', {
+      url: "",
+      templateUrl: "views/menus.list.html",
+      controller: 'MenusController',
     })
     .state('menus.detail', {
       url: "/detail",
       templateUrl: "views/menus.detail.html",
+      controller: 'MenusController',
+    })
+    .state('messages', {
+      url: "/messages",
+      templateUrl: "views/messages.html",
       controller: 'SimpleController',
     });
+
+    $urlRouterProvider.otherwise("/");
 });
 
 
-// ****************
-// SimpleController
-// ****************
-myApp.controller('SimpleController', function($scope) {
-    $scope.customers = [
-        {name:'Jani',city:'Norway'},
-        {name:'Hege',city:'Aroba'},
-        {name:'Kai',city:'Denmark'}
-    ];
-
-    $scope.register = function() {
-        newCustomer = {}
-        newCustomer.name = $scope.newName;
-        newCustomer.city = $scope.newCity;
-        $scope.customers.push(newCustomer);
-    };
-});

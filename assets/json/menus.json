@@ -1,0 +1,47 @@
+{
+  "menus":[
+    {
+      "id": 1,
+      "name": "Chinese",
+      "items": [
+        {
+          "id": "a",
+          "type": "phone number",
+          "value": "555-1234-1234"
+        },
+        {
+          "id": "b",
+          "type": "email",
+          "value": "alice@mailinator.com"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Indian",
+      "items": [
+        {
+          "id": "a",
+          "type": "blog",
+          "value": "http://bob.blogger.com"
+        },
+        {
+          "id": "b",
+          "type": "fax",
+          "value": "555-999-9999"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Italian",
+      "items": [
+        {
+          "id": "a",
+          "type": "full name",
+          "value": "Eve Adamsdottir"
+        }
+      ]
+    }
+  ]
+}

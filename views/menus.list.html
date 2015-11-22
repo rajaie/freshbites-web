@@ -1,9 +1,13 @@
-<p>All menus listed here</p>
-
-<ul>
-    <li><a ui-sref="menus.detail">Testing</a></li>
-    <li>One two three</li>
-    <li ng-repeat="menu in menus">
-    <a ui-sref="menu.detail({menuID:menu.id})">{{menu.name}}</a>
-  </li>
-</ul>
+<div class="row">
+    <div class="col-md-3">
+    <h2>Menus</h2>
+        <ul>
+            <li ng-repeat="menu in menus">
+                <a ui-sref="menus.list.detail({id:menu.id})">{{menu.name}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div ui-view></div>
+    </div>
+</div>

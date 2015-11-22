@@ -8,34 +8,35 @@
         <script src="assets/js/dependencies/angular-ui-router.min.js"></script>
         <script src="assets/js/dependencies/bootstrap.min.js"></script>
         <script src="assets/js/app.js"></script>
-        <script src="assets/js/factories.js"></script>
         <script src="assets/js/controllers.js"></script>
+        <script src="assets/js/factories.js"></script>
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="icon" type="image/png" href="assets/img/favicon.png">
-        <title>FreshBites.com - It's just a database&trade;</title>
+        <title>FreshBites.com&trade; - Caterer Portal</title>
     </head>
     <body>
-        <div class="container">
-            <a href="/">
-            <img src="assets/img/logo.png" class="logo" />
-            </a>
-                <div class="container-fluid">
-                    <div>
-                        <ul class="nav nav-pills">
-                            <li ui-sref-active='active'><a ui-sref="register">Register</a></li>
-                            <li ui-sref-active='active'><a ui-sref="login">Log in</a></li>
-                            <li ui-sref-active='active'><a ui-sref="orders">Orders</a></li>
-                            <li ui-sref-active='active'><a ui-sref="menus.list">Menus</a></li>
-                            <li ui-sref-active='active'><a ui-sref="messages">Messages</a></li>
-                            <li ui-sref-active='active'><a ui-sref="payments">Payments</a></li>
-                            <li ui-sref-active='active'><a ui-sref="profile">Profile</a></li>
-                        </ul>
-                    </div>
+        <div class="main container">
+            <div class="header">
+                <div class="profile-bar">
+                    <span>Welcome <a href="#">Rajaie</a></span>
                 </div>
-            <div>
-                <div ui-view=""></div>
-            </div>
+                <div class="logo-bar">
+                    <a href="/">
+                        <img src="assets/img/logo.png" class="logo" />
+                    </a>
+                </div>
+                <ul class="nav nav-pills">
+                    <li ui-sref-active='active'><a ui-sref="register">Register</a></li>
+                    <li ui-sref-active='active'><a ui-sref="login">Log in</a></li>
+                    <li ui-sref-active='active'><a ui-sref="orders">Orders</a></li>
+                    <li ui-sref-active='active'><a ui-sref="menus.list">Menus</a></li>
+                    <li ui-sref-active='active'><a ui-sref="messages">Messages</a></li>
+                    <li ui-sref-active='active'><a ui-sref="payments">Payments</a></li>
+                    <li ui-sref-active='active'><a ui-sref="profile">Profile</a></li>
+                </ul>
+            </div><!-- /header -->
+            <div class="body" ui-view=""></div>
         </div>
     </body>
 </html>

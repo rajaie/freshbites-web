@@ -1,5 +1,17 @@
-
 <h2>{{menu.name}} Menu</h2>
-<ul>
-
+Price: ${{menu.price}}
+<br />
+Items:
+<ul ng-repeat="item in menu.items">
+    <li><strong>{{item.name}}</strong></li>
+    <li>Description: {{item.description}}</li>
+    <li>Servings: {{item.servings}}</li>
+    <li>Ingredients:
+        <ul>
+            <li ng-repeat="ingredient in item.ingredients">
+                {{ingredient}}
+            </li>
+        </ul>
+    </li>
 </ul>
+

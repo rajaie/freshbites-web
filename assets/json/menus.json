@@ -1,58 +1,106 @@
 {
-  "menus":[
-    {
-      "id": 1,
-      "name": "Chinese Kung-Pao Healthy",
-      "items": [
+    "menus":[
         {
-          "name": "a",
-          "description": "phone number",
-          "value": "555-1234-1234"
+            "id":1,
+            "name":"Chinese Kung-Pao Healthy",
+            "price":39.4,
+            "items":[
+                {
+                    "name":"Grouper and Tofu on Rice",
+                    "description":"Best tofu you'll ever have in your life. Grouper is marinated for 18 days and then hand beaten with a wooden spoon until ripe. If you prefer your grouper unbeaten, please let us know after placing your order",
+                    "servings":2,
+                    "ingredients":[
+                        "500g grouper belly",
+                        "1 pack hard tofu",
+                        "3 cloves of garlic, crushed",
+                        "20g ginger, slice",
+                        "20g green onion",
+                        "20g red chili peppers, cut half",
+                        "Fish seasoning",
+                        "20g corn starch",
+                        "1 tablespoon Chinese cooking wine"
+                    ]
+                },
+                {
+                    "name":"Spicy Chicken General Mao",
+                    "description":"So spicy it will make your internal organs bleed",
+                    "servings":5,
+                    "ingredients":[
+                        "500g chili powder",
+                        "1 half cut apple",
+                        "3 tablespoons pepper oil"
+                    ]
+                }
+            ]
         },
         {
-          "id": "b",
-          "type": "email",
-          "value": "alice@mailinator.com"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "name": "Indian Vegetarian",
-      "items": [
-        {
-          "id": "a",
-          "type": "blog",
-          "value": "http://bob.blogger.com"
+            "id":2,
+            "price":24.4,
+            "name":"Indian Vegetarian",
+            "items":[
+                {
+                    "name":"Grouper and Tofu on Rice",
+                    "description":"First thing that came to my mind when I saw grouper was claypot fish First thing that came to my mind when",
+                    "servings":2,
+                    "ingredients":[
+                        "500g grouper belly",
+                        "1 pack hard tofu",
+                        "3 cloves of garlic, crushed",
+                        "20g ginger, slice",
+                        "20g green onion",
+                        "20g red chili peppers, cut half",
+                        "Fish seasoning",
+                        "20g corn starch",
+                        "1 tablespoon Chinese cooking wine"
+                    ]
+                }
+            ]
         },
         {
-          "id": "b",
-          "type": "fax",
-          "value": "555-999-9999"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "name": "Gluten-Free Italian Special",
-      "items": [
+            "id":3,
+            "name":"Gluten-Free Italian Special",
+            "price":59.4,
+            "items":[
+                {
+                    "name":"Grouper and Tofu on Rice",
+                    "description":"First thing that came to my mind when I saw grouper was claypot fish First thing that came to my mind when",
+                    "servings":2,
+                    "ingredients":[
+                        "500g grouper belly",
+                        "1 pack hard tofu",
+                        "3 cloves of garlic, crushed",
+                        "20g ginger, slice",
+                        "20g green onion",
+                        "20g red chili peppers, cut half",
+                        "Fish seasoning",
+                        "20g corn starch",
+                        "1 tablespoon Chinese cooking wine"
+                    ]
+                }
+            ]
+        },
         {
-          "id": "a",
-          "type": "full name",
-          "value": "Eve Adamsdottir"
+            "id":4,
+            "name":"Spicy Korean Seafood",
+            "price":639.4,
+            "items":[
+                {
+                    "name":"Grouper and Tofu on Rice",
+                    "description":"First thing that came to my mind when I saw grouper was claypot fish First thing that came to my mind when",
+                    "servings":2,
+                    "ingredients":[
+                        "500g grouper belly",
+                        "1 pack hard tofu",
+                        "3 cloves of garlic, crushed",
+                        "20g ginger, slice",
+                        "20g green onion",
+                        "20g red chili peppers, cut half",
+                        "Fish seasoning",
+                        "20g corn starch",
+                        "1 tablespoon Chinese cooking wine"
+                    ]
+                }
+            ]
         }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "Spicy Korean Seafood",
-      "items": [
-        {
-          "id": "a",
-          "type": "full name",
-          "value": "Eve Adamsdottir"
-        }
-      ]
-    }
-  ]
+    ]
 }

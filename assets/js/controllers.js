@@ -8,10 +8,29 @@ myApp.controller('SimpleController', function($scope) {
         {name:'Kai',city:'Denmark'}
     ];
     $scope.register = function() {
-        newCustomer = {}
-        newCustomer.name = $scope.newName;
-        newCustomer.city = $scope.newCity;
-        $scope.customers.push(newCustomer);
+        newUser = {}
+        newUser.email = $scope.email;
+        newUser.password = $scope.password;
+        //$scope.customers.push(newCustomer);
+
+        Parse.initialize("TDDsVhxFqXCHbzAcpxHiIhUuhFTUfCvIZONdTHfY", "AMWekC7CBBsD920ROCv113qrQ1bGSjdHi0QjBfme");
+        var user = new Parse.User();
+        user.set("username", newUser.email);
+        user.set("email", newUser.email);
+        user.set("password", newUser.password);
+
+        // other fields can be set just like with Parse.Object
+        //user.set("phone", "650-555-0000");
+
+        user.signUp(null, {
+          success: function(user) {
+            alert("User has been created!");
+          },
+          error: function(user, error) {
+            // Show the error message somewhere and let the user try again.
+            alert("Error: " + error.code + " " + error.message);
+          }
+        });
     };
 });
 

@@ -1,16 +1,9 @@
 <div>
     <h2>Register</h2>
     <div>
-        Search: <input type="text" ng-model="name" />
-        <ul>
-          <li ng-repeat="cust in customers | filter:name | orderBy: 'city' ">
-            {{ cust.name }} - {{ cust.city }}
-          </li>
-        </ul>
-    </div>
-    <div>
         <p><input type="text" ng-model="email" placeholder="Email" /></p>
         <p><input type="password" ng-model="password" placeholder="Password" /></p>
+        <p><input type="password" ng-model="password" placeholder="Confirm Password" /></p>
         <button ng-click="register()">Register</button>
     </div>
 </div>

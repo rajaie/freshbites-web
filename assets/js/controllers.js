@@ -39,4 +39,23 @@ myApp.controller('SimpleController', function($scope) {
 // *****
 myApp.controller('MenusController', function($scope, menus) {
     $scope.menus = menus;
+    $scope.addMenu = function() {
+        Parse.initialize("TDDsVhxFqXCHbzAcpxHiIhUuhFTUfCvIZONdTHfY", "AMWekC7CBBsD920ROCv113qrQ1bGSjdHi0QjBfme");
+        var parseMenu = Parse.Object.extend("Menu");
+        var parseMenu = new parseMenu();
+
+        parseMenu.set("name", $scope.menuName);
+        parseMenu.set("price", $scope.menuPrice);
+        parseMenu.set("description", $scope.menuDescription);
+
+        parseMenu.save(null, {
+          success: function(menu) {
+            alert('New object created with objectId: ' + menu.id);
+          },
+          error: function(menu, error) {
+            alert('Failed to create new object, with error code: ' + error.message);
+          }
+        });
+
+    };
 });

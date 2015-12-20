@@ -45,13 +45,14 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         templateUrl: "views/profile.edit.html",
         controller: 'SimpleController',
     })
+    // ********** Menus **********
     .state('menus', {
         url: "/menus",
         abstract: true,
         templateUrl: "views/menus.html",
         resolve: {
             menus: function(menusFactory){
-                return menusFactory.all();
+                return menusFactory.getAllMenus();
             }
         },
         controller: 'MenusController',
@@ -59,6 +60,11 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     .state('menus.list', {
         url: "",
         templateUrl: "views/menus.list.html",
+    })
+    .state('menus.list.add', {
+        url: "/add",
+        templateUrl: "views/menus.list.add",
+        controller: 'MenusController',
     })
     .state('menus.list.detail', {
         url: "/:id",

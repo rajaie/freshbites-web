@@ -1,9 +1,8 @@
 var myApp = angular.module('myApp', ['ui.router']);
 
-// ******
-// Routes
-// ******
 myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
+
+    Parse.initialize("TDDsVhxFqXCHbzAcpxHiIhUuhFTUfCvIZONdTHfY", "AMWekC7CBBsD920ROCv113qrQ1bGSjdHi0QjBfme");
 
     $locationProvider.html5Mode({
         enabled: true

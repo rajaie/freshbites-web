@@ -70,3 +70,17 @@ body {
   text-decoration: line-through;
   color: grey;
 }
+
+/* Menus */
+fieldset.newMenuItem div {
+    background: #D4D4D4;
+    position: relative;
+    padding: 3px;
+    width: 340px;
+    overflow: auto;
+}
+
+fieldset.newMenuItem div button.remove{
+    position: absolute;
+    right: 3px;
+}

@@ -38,9 +38,27 @@ myApp.controller('SimpleController', function($scope) {
 // Menus
 // *****
 myApp.controller('MenusController', function($scope, menus) {
+    // load all menus
     $scope.menus = menus;
-    $scope.addMenu = function() {
-        Parse.initialize("TDDsVhxFqXCHbzAcpxHiIhUuhFTUfCvIZONdTHfY", "AMWekC7CBBsD920ROCv113qrQ1bGSjdHi0QjBfme");
+
+    $scope.clearForms = function() {
+        $scope.menuName = "";
+        $scope.menuPrice = "";
+        $scope.menuDescription = "";
+    }
+
+    $scope.items = [{id: 0}];
+    $scope.addItem = function() {
+        newId = $scope.items[$scope.items.length-1].id + 1;
+        $scope.items.push({id: newId});
+        console.log($scope.items);
+    }
+
+    $scope.removeItem = function(itemIndex) {
+        $scope.items.splice(itemIndex, 1);
+    }
+
+    $scope.saveMenu = function() {
         var parseMenu = Parse.Object.extend("Menu");
         var parseMenu = new parseMenu();
 
@@ -48,14 +66,14 @@ myApp.controller('MenusController', function($scope, menus) {
         parseMenu.set("price", $scope.menuPrice);
         parseMenu.set("description", $scope.menuDescription);
 
-        parseMenu.save(null, {
-          success: function(menu) {
-            alert('New object created with objectId: ' + menu.id);
-          },
-          error: function(menu, error) {
-            alert('Failed to create new object, with error code: ' + error.message);
-          }
-        });
-
+        parseMenu.save(null).then(
+            function(menu) {
+                alert('New object created with objectId: ' + menu.id);
+            },
+            function(menu, error) {
+                alert('Failed to create new object, with error code: ' + error.message);
+            }
+        );
     };
+
 });

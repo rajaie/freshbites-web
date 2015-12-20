@@ -1,7 +1,5 @@
 // A RESTful factory for retrieving sample data
 myApp.factory('menusFactory', function() {
-    // Parse
-    Parse.initialize("TDDsVhxFqXCHbzAcpxHiIhUuhFTUfCvIZONdTHfY", "AMWekC7CBBsD920ROCv113qrQ1bGSjdHi0QjBfme");
     var factory = {};
 
     function GettersAndSetters(classObject, attributesArray) {
@@ -12,8 +10,8 @@ myApp.factory('menusFactory', function() {
     }
 
     factory.getAllMenus = function() {
-        var ParseMenu = Parse.Object.extend("Menu");
-        var query = new Parse.Query(ParseMenu);
+        var parseMenu = Parse.Object.extend("Menu");
+        var query = new Parse.Query(parseMenu);
         var menus = query.find().then(
             function(results) {
                 console.log("Successfully retrieved " + results.length + " results.");
@@ -28,10 +26,9 @@ myApp.factory('menusFactory', function() {
                         }, {
                             angular: 'price',
                             parse: 'price'
-                        } // Any extra columns / properties needed
+                        }
                     ]);
                 }
-                console.log("works! " + results[0].menuName);
                 /////////////
                 return results;
             }

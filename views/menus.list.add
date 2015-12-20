@@ -1,8 +1,21 @@
 <h2>New Menu Listing</h2>
 <div>
     <p><input type="text" ng-model="menuName" placeholder="Menu Name" /></p>
-    <p><input type="text" ng-model="menuPrice" placeholder="Price" /></p>
-    <p><input type="text" ng-model="menuDescription" placeholder="Description" /></p>
-    <button ng-click="addMenu()">Add Menu</button>
+    <p><input type="text" ng-model="menuPrice" placeholder="Menu Price" /></p>
+    <p><input type="text" ng-model="menuDescription" placeholder="Menu Description" /></p>
+
+    <p>Menu Items <a href="#" ng-click="addItem()">(Add+)</a></p>
+    <fieldset ng-repeat="item in items" class="newMenuItem">
+        <div>
+        <button class="btn btn-default remove" ng-hide="$first" ng-click="removeItem($index)">
+            <span class="glyphicon glyphicon-remove-sign"></span>
+        </button>
+        <p><input type="text" ng-model="item.name" placeholder="Item Name" /></p>
+        <p><input type="number" ng-model="item.servings" placeholder="Item Servings" /></p>
+        <textarea rows="3" cols="40" ng-model="item.description" placeholder="Item Description" /></textarea>
+        </div>
+    </fieldset>
+    <br />
+    <p><button class="btn btn-primary" ng-click="saveMenu()">Save Menu</button></p>
 </div>
 

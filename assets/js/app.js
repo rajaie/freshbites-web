@@ -50,7 +50,7 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         abstract: true,
         templateUrl: "views/menus.html",
         resolve: {
-            menus: function(menusFactory){
+            loadedMenus: function(menusFactory){
                 return menusFactory.getAllMenus();
             }
         },
@@ -59,25 +59,17 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     .state('menus.list', {
         url: "",
         templateUrl: "views/menus.list.html",
+        controller: 'MenusController',
     })
     .state('menus.list.add', {
         url: "/add",
-        templateUrl: "views/menus.list.add",
+        templateUrl: "views/menus.list.add.html",
         controller: 'MenusController',
     })
     .state('menus.list.detail', {
         url: "/:id",
         templateUrl: "views/menus.list.detail.html",
-        controller: function ($scope, $stateParams) {
-            menuId = $stateParams.id;
-            menus = $scope.menus;
-            for (var i = 0; i < menus.length; i++) {
-                if (menus[i].id == menuId) {
-                    $scope.menu = menus[i];
-                    break;
-                }
-            }
-        }
+        controller: 'MenusController'
     })
     .state('messages', {
       url: "/messages",

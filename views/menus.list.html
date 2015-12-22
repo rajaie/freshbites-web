@@ -4,6 +4,7 @@
         <ul>
             <li ng-repeat="menu in menus">
                 <a ui-sref="menus.list.detail({id:menu.id})">{{menu.menuName}}</a>
+                <a ng-click="deleteMenu(menu)" href="#">(-)</a>
             </li>
         </ul>
         <a ui-sref="menus.list.add">New Menu</a>

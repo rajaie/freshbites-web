@@ -4,7 +4,7 @@
     <p><input type="text" ng-model="menuPrice" placeholder="Menu Price" /></p>
     <p><input type="text" ng-model="menuDescription" placeholder="Menu Description" /></p>
 
-    <p>Menu Items <a href="#" ng-click="addItem()">(Add+)</a></p>
+    <p>Items <a href="#" ng-click="addItem()">(Add+)</a></p>
     <fieldset ng-repeat="item in items" class="newMenuItem">
         <div>
         <button class="btn btn-default remove" ng-hide="$first" ng-click="removeItem($index)">
@@ -16,6 +16,6 @@
         </div>
     </fieldset>
     <br />
-    <p><button class="btn btn-primary" ng-click="saveMenu()">Save Menu</button></p>
+    <p><button class="btn btn-primary" ng-click="newMenu()">Add Menu</button></p>
 </div>
 

@@ -7,6 +7,12 @@ body {
     height: 100%;
 }
 
+/* General */
+
+.glyphicon.red {
+    color: #EA2828;
+}
+
 .main.container {
     background: white;
     min-height: 100%;
@@ -83,4 +89,8 @@ fieldset.newMenuItem div {
 fieldset.newMenuItem div button.remove{
     position: absolute;
     right: 3px;
+}
+
+img.menuPhoto {
+    height: 100px;
 }

@@ -1,6 +1,54 @@
+myApp.factory('toolsFactory', function() {
+    var factory = {};
+
+    factory.uploadImage = function(file) {
+        var imageFile = file;
+        var imageName = file.name;
+        var parseFile = new Parse.File(imageName, imageFile);
+        return parseFile.save().then(function(returnedFile) {
+            return returnedFile;
+        });
+    }
+
+    factory.uploadImages = function(fileList) {
+        uploadedImages = [];
+        return new Promise(function(resolve, reject) {
+            if (fileList.length == 0 )
+                resolve(uploadedImages);
+            for (var i = 0; i < fileList.length; i++) {
+                factory.uploadImage(fileList[i]).then(
+                    function(uploadedImage) {
+                        uploadedImages.push(uploadedImage);
+                        if (uploadedImages.length === fileList.length) {
+                            resolve(uploadedImages)
+                        }
+                    });
+            }
+        });
+    }
+
+    return factory;
+});
+
 // A RESTful factory for retrieving sample data
 myApp.factory('menusFactory', function() {
     var factory = {};
+    var menuAttributes = [{
+        angular: 'menuName',
+        parse: 'name'
+    }, {
+        angular: 'description',
+        parse: 'description'
+    }, {
+        angular: 'menuPhotos',
+        parse: 'menuPhotos'
+    }, {
+        angular: 'items',
+        parse: 'items'
+    }, {
+        angular: 'price',
+        parse: 'price'
+    }];
 
     function GettersAndSetters(results, attributesArray) {
         for (var x = 0; x < results.length; x++) {
@@ -10,39 +58,45 @@ myApp.factory('menusFactory', function() {
             }
         }
     }
-    var menuAttributes = [{
-        angular: 'menuName',
-        parse: 'name'
-    }, {
-        angular: 'description',
-        parse: 'description'
-    }, {
-        angular: 'price',
-        parse: 'price'
-    }];
-
-    factory.getAllMenus = function() {
+    function SetDisplayName(menus) {
+        for (var i = 0; i < menus.length; i++) {
+            menus[i].displayName = menus[i].get("name");
+        }
+    }
+    // Returns a list of menu names
+    factory.getMenuList = function() {
+        console.log("Getting menu list");
         var parseMenu = Parse.Object.extend("Menu");
         var query = new Parse.Query(parseMenu);
-        var menus = query.find().then(
-            function(results) {
-                GettersAndSetters(results, menuAttributes);
-                return results;
+        query.select("name");
+        return query.find().then(
+            function(menus) {
+                GettersAndSetters(menus, menuAttributes);
+                SetDisplayName(menus);
+                return menus;
             }
-        );
-        return menus;
+        )
     };
-
-    factory.newMenu = function(parseObject) {
+    // Returns a list of menu names
+    factory.getMenu = function(menu) {
+        var parseMenu = Parse.Object.extend("Menu");
+        var query = new Parse.Query(parseMenu);
+        return menu.fetch().then(function(result) {
+            // GettersAndSetters([result], menuAttributes);
+            return result;
+        });
+    };
+    factory.saveMenu = function(parseObject) {
         result = parseObject.save(null).then(
             function(menu) {
                 results = [menu];
                 GettersAndSetters(results, menuAttributes);
-                console.log('Menu has been added with Id: ' + menu.id);
+                SetDisplayName(results);
+                console.log("'" + menu.menuName + "' Menu saved successfully. ID: " + menu.id);
                 return results[0];
             },
-            function(menu, error) {
-                alert('Failed to create new object, with error code: ' + error.message);
+            function(error) {
+                console.log('Failed to save Menu object. Error message: ' + error.message);
             }
         );
         return result;

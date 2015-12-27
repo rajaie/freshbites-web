@@ -1,8 +1,8 @@
-<h2>New Menu Listing</h2>
+<h2>Edit '{{menu.displayName}}' Menu Listing</h2>
 <div>
-    <p><input type="text" ng-model="menuName" placeholder="Menu Name" /></p>
-    <p><input type="text" ng-model="menuPrice" placeholder="Menu Price" /></p>
-    <p><input type="text" ng-model="menuDescription" placeholder="Menu Description" /></p>
+    <p>Menu Name: <input type="text" ng-model="menu.menuName" /></p>
+    <p>Menu Price: <input type="text" ng-model="menu.price" /></p>
+    <p>Menu Description: <input type="text" ng-model="menu.description" placeholder="Menu Description" /></p>
 
     <p>Items <a href="#" ng-click="addItem()">(Add+)</a></p>
     <fieldset ng-repeat="item in items" class="newMenuItem">
@@ -19,7 +19,7 @@
     Upload Images: <input type="file" id="menuPhotos" ng-model="fileUpload" multiple />
     <br />
     <p>
-        <button class="btn btn-primary" ng-click="addMenu()">Add Menu</button>
+        <button class="btn btn-primary" ng-click="updateMenu(menu)">Update Menu</button>
     </p>
 </div>
 

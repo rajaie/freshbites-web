@@ -1,21 +1,26 @@
 <h2>{{menu.menuName}} Menu</h2>
+
+<a ng-repeat="menuPhoto in menu.menuPhotos" ng-href="{{menuPhoto.url()}}"><img ng-src="{{menuPhoto.url()}}" class="menuPhoto" /></a>
+<br />
 Price: ${{menu.price}}
 <br />
 Description: {{menu.description}}
 <br />
 Items:
 <ul ng-repeat="item in menu.items">
-    <li><strong>{{item.name}}</strong></li>
-    <li>Description: {{item.description}}</li>
+    <li><strong>{{item.itemName}}</strong></li>
+    <li>Description: {{item.itemDescription}}</li>
     <li>Servings: {{item.servings}}</li>
-    <li>Ingredients:
+<!--     <li>Ingredients:
         <ul>
             <li ng-repeat="ingredient in item.ingredients">
                 {{ingredient}}
             </li>
+            <li>Rice bowl</li>
         </ul>
-    </li>
+    </li> -->
 </ul>
-<br />
-<br />
-<p><button class="btn btn-danger" ng-click="deleteMenu()">Delete Menu</button></p>
+<p>
+    <button class="btn btn-danger" ng-click="deleteMenu(menu)">Delete</button>
+    <button class="btn btn-primary" ui-sref="menus.list.edit({id:menu.id})">Edit</button>
+</p>

@@ -50,8 +50,8 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         abstract: true,
         templateUrl: "views/menus.html",
         resolve: {
-            loadedMenus: function(menusFactory){
-                return menusFactory.getAllMenus();
+            menuList: function(menusFactory){
+                return menusFactory.getMenuList();
             }
         },
         controller: 'MenusController',
@@ -69,6 +69,11 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     .state('menus.list.detail', {
         url: "/:id",
         templateUrl: "views/menus.list.detail.html",
+        controller: 'MenusController'
+    })
+    .state('menus.list.edit', {
+        url: "/edit/:id",
+        templateUrl: "views/menus.list.edit.html",
         controller: 'MenusController'
     })
     .state('messages', {

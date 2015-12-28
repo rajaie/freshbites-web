@@ -48,28 +48,36 @@ myApp.controller('MenusController', function($scope, toolsFactory, menusFactory,
     $scope.removeItem = function(itemIndex) {
         $scope.items.splice(itemIndex, 1);
     };
-    $scope.addMenu = function() {
-        var Menu = Parse.Object.extend("Menu");
-        var menu = new Menu();
+    $scope.addImage = function() {
+        console.log($scope.menu);
         var fileList = $("#menuPhotos")[0].files;
-        // remove $$hashKey that AngularJS adds
+        toolsFactory.uploadImages(fileList).then(function(uploadedImages) {
+            $scope.menu.menuPhotos = $scope.menu.menuPhotos.concat(uploadedImages);
+            $("#menuPhotos").val(null); // clear file input form
+            $scope.$apply();
+        });
+    }
+    $scope.removeImage = function(image) {
+        imageIndex = $scope.menu.menuPhotos.indexOf(image);
+        $scope.menu.menuPhotos.splice(imageIndex, 1);
+    }
+    $scope.addMenu = function() {
+        // remove $$hashKey keys that AngularJS adds when ng-repeat used
+        // http://stackoverflow.com/questions/18826320/what-is-the-hashkey-added-to-my-json-stringify-result
         menuItems = JSON.parse(angular.toJson($scope.items));
 
-        toolsFactory.uploadImages(fileList).then(
-            function(uploadedImages) {
-                menu.set("name", $scope.menuName);
-                menu.set("price", $scope.menuPrice);
-                menu.set("description", $scope.menuDescription);
-                menu.set("items", menuItems);
-                menu.set("menuPhotos", uploadedImages);
+        menu.set("name", $scope.menuName);
+        menu.set("price", $scope.menuPrice);
+        menu.set("description", $scope.menuDescription);
+        menu.set("items", menuItems);
+        menu.set("menuPhotos", $scope.menu.menuPhotos);
 
-                menusFactory.saveMenu(menu).then(function(menu) {
-                    $scope.menus.push(menu);
-                    $state.go('menus.list.detail', {
-                        id: menu.id
-                    });
-                });
+        menusFactory.saveMenu(menu).then(function(menu) {
+            $scope.menus.push(menu);
+            $state.go('menus.list.detail', {
+                id: menu.id
             });
+        });
     };
     $scope.deleteMenu = function(menu) {
         menu.destroy().then(
@@ -86,7 +94,7 @@ myApp.controller('MenusController', function($scope, toolsFactory, menusFactory,
         );
     };
     $scope.updateMenu = function(menu) {
-        menuItems = JSON.parse(angular.toJson($scope.items));
+        var menuItems = JSON.parse(angular.toJson($scope.items));
         menu.set("items", menuItems);
 
         menusFactory.saveMenu(menu).then(function(menu) {
@@ -115,6 +123,15 @@ myApp.controller('MenusController', function($scope, toolsFactory, menusFactory,
         }
     } else {
         $scope.menus = menuList;
+
+        // Menu object for use in 'Add Menu' page
+        if ($state.current.name === 'menus.list.add') {
+            Menu = Parse.Object.extend("Menu");
+            menu = new Menu();
+            menu.menuPhotos = [];
+            $scope.menu = menu;
+            console.log("New menu object created");
+        }
     }
 
 });

@@ -16,7 +16,14 @@
         </div>
     </fieldset>
     <br />
-    Upload Images: <input type="file" id="menuPhotos" ng-model="fileUpload" multiple />
+    Images:
+    <p ng-repeat="menuPhoto in menu.menuPhotos" >
+        <a ng-href="{{menuPhoto.url()}}"><img ng-src="{{menuPhoto.url()}}" class="menuPhoto" /></a>
+        - <a href="#" ng-click="removeImage(menuPhoto)">Remove</a>
+    </p>
+    <br />
+    <br />
+    <input type="file" id="menuPhotos" ng-model="fileUpload" file-input-on-change="addImage" multiple />
     <br />
     <p>
         <button class="btn btn-primary" ng-click="updateMenu(menu)">Update Menu</button>

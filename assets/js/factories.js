@@ -6,6 +6,7 @@ myApp.factory('toolsFactory', function() {
         var imageName = file.name;
         var parseFile = new Parse.File(imageName, imageFile);
         return parseFile.save().then(function(returnedFile) {
+            console.log(imageName + " uploaded successfully");
             return returnedFile;
         });
     }
@@ -65,7 +66,6 @@ myApp.factory('menusFactory', function() {
     }
     // Returns a list of menu names
     factory.getMenuList = function() {
-        console.log("Getting menu list");
         var parseMenu = Parse.Object.extend("Menu");
         var query = new Parse.Query(parseMenu);
         query.select("name");

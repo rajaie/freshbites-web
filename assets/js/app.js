@@ -12,37 +12,36 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     .state('default', {
         url: "/",
         templateUrl: "views/home.html",
-        controller: 'SimpleController',
     })
     .state('register', {
         url: "/register",
         templateUrl: "views/register.html",
-        controller: 'SimpleController',
+        controller: 'SessionController',
     })
     .state('login', {
         url: "/login",
         templateUrl: "views/login.html",
-        controller: 'SimpleController',
+        controller: 'SessionController',
     })
     .state('orders', {
         url: "/orders",
         templateUrl: "views/orders.html",
-        controller: 'SimpleController',
     })
     .state('payments', {
         url: "/payments",
         templateUrl: "views/payments.html",
-        controller: 'SimpleController',
     })
     .state('profile', {
         url: "/profile",
         templateUrl: "views/profile.html",
-        controller: 'SimpleController',
     })
     .state('profile.edit', {
         url: "/edit",
         templateUrl: "views/profile.edit.html",
-        controller: 'SimpleController',
+    })
+    .state('messages', {
+      url: "/messages",
+      templateUrl: "views/messages.html",
     })
     // ********** Menus **********
     .state('menus', {
@@ -75,11 +74,6 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         url: "/edit/:id",
         templateUrl: "views/menus.list.edit.html",
         controller: 'MenusController'
-    })
-    .state('messages', {
-      url: "/messages",
-      templateUrl: "views/messages.html",
-      controller: 'SimpleController',
     });
 
     $urlRouterProvider.otherwise("/");

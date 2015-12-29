@@ -31,7 +31,36 @@ myApp.factory('toolsFactory', function() {
     return factory;
 });
 
-// A RESTful factory for retrieving sample data
+// *****
+// Users
+// *****
+myApp.factory('usersFactory', function() {
+    var factory = {};
+    var userAttributes = [{
+        angular: 'username',
+        parse: 'username'
+    }];
+
+    function GettersAndSetters(classObject) {
+        attributesArray = userAttributes;
+        for (var i = 0; i < attributesArray.length; i++) {
+            eval('Object.defineProperty(classObject, "' + attributesArray[i].angular + '", {' + 'configurable: true, get: function() {' + 'return this.get("' + attributesArray[i].parse + '");' + '},' + 'set: function(aValue) {' + 'this.set("' + attributesArray[i].parse + '", aValue);' + '}' + '});');
+        }
+    }
+
+    factory.getCurrentUser = function() {
+        var parseUser = Parse.User.current();
+        GettersAndSetters(parseUser);
+        return parseUser;
+    }
+
+    return factory;
+
+});
+
+// *****
+// Menus
+// *****
 myApp.factory('menusFactory', function() {
     var factory = {};
     var menuAttributes = [{

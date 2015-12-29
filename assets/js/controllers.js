@@ -1,47 +1,40 @@
 // ****************
 // SimpleController
 // ****************
-myApp.controller('SimpleController', function($scope) {
-    $scope.customers = [{
-        name: 'Jani',
-        city: 'Norway'
-    }, {
-        name: 'Hege',
-        city: 'Aroba'
-    }, {
-        name: 'Kai',
-        city: 'Denmark'
-    }];
+myApp.controller('SessionController', function($scope, usersFactory) {
     $scope.register = function() {
-        newUser = {}
-        newUser.email = $scope.email;
-        newUser.password = $scope.password;
-        //$scope.customers.push(newCustomer);
-
-        Parse.initialize("TDDsVhxFqXCHbzAcpxHiIhUuhFTUfCvIZONdTHfY", "AMWekC7CBBsD920ROCv113qrQ1bGSjdHi0QjBfme");
         var user = new Parse.User();
-        user.set("username", newUser.email);
-        user.set("email", newUser.email);
-        user.set("password", newUser.password);
+        user.set("username", $scope.username);
+        user.set("password", $scope.password);
 
-        // other fields can be set just like with Parse.Object
-        //user.set("phone", "650-555-0000");
-        user.signUp(null, {
-            success: function(user) {
-                alert("User has been created!");
+        user.signUp().then(
+            function(user) {
+                console.log("User '" + user.get("username") + "' has been created!");
             },
-            error: function(user, error) {
-                // Show the error message somewhere and let the user try again.
-                alert("Error: " + error.code + " " + error.message);
+            function(user, error) {
+                console.log("Error: " + error.code + " " + error.message);
             }
-        });
-    };
+        );
+    }
+    $scope.login = function() {
+        Parse.User.logIn($scope.username, $scope.password).then(
+            function(user) {
+                console.log("Logged in successfully");
+                $scope.currentUser = usersFactory.getCurrentUser();
+                $scope.$apply();
+            },
+            function(error) {
+                console.log(error);
+            });
+    }
+
+    $scope.currentUser = usersFactory.getCurrentUser();
 });
 
 // *****
 // Menus
 // *****
-myApp.controller('MenusController', function($scope, toolsFactory, menusFactory, menuList, $stateParams, $state, $timeout) {
+myApp.controller('MenusController', function($scope, usersFactory,  toolsFactory, menusFactory, menuList, $stateParams, $state, $timeout) {
     $scope.addItem = function() {
         $scope.items.push({});
     };
@@ -94,6 +87,7 @@ myApp.controller('MenusController', function($scope, toolsFactory, menusFactory,
         );
     };
     $scope.updateMenu = function(menu) {
+        // remove $$hashKey keys that AngularJS adds when ng-repeat used
         var menuItems = JSON.parse(angular.toJson($scope.items));
         menu.set("items", menuItems);
 
@@ -101,10 +95,26 @@ myApp.controller('MenusController', function($scope, toolsFactory, menusFactory,
             return menusFactory.getMenuList();
         }).then(function(results) {
             $scope.$parent.menus = results;
-            $state.go('menus.list.detail', {id: menu.id});
+            $state.go('menus.list.detail', {
+                id: menu.id
+            });
+        });
+    };
+    $scope.secureMenu = function(menu) {
+        var menuItems = JSON.parse(angular.toJson($scope.items));
+        menu.set("items", menuItems);
+
+        parseACL = new Parse.ACL(Parse.User.current());
+        menu.setACL(parseACL);
+        menu.save().then(function() {
+            console.log("menu secured");
+        }, function(error) {
+            console.log(JSON.stringify(error));
+            console.log("menu not secured");
         });
     };
 
+    $scope.currentUser = usersFactory.getCurrentUser();
     // Default items array. Used for adding new menu items.
     $scope.items = [{}];
     // Bind selected menu object into scope
@@ -130,7 +140,6 @@ myApp.controller('MenusController', function($scope, toolsFactory, menusFactory,
             menu = new Menu();
             menu.menuPhotos = [];
             $scope.menu = menu;
-            console.log("New menu object created");
         }
     }
 

@@ -21,6 +21,8 @@ myApp.controller('SessionController', function($scope, usersFactory) {
             function(user) {
                 console.log("Logged in successfully");
                 $scope.currentUser = usersFactory.getCurrentUser();
+                $scope.username = "";
+                $scope.password = "";
                 $scope.$apply();
             },
             function(error) {
@@ -67,7 +69,7 @@ myApp.controller('MenusController', function($scope, usersFactory,  toolsFactory
 
         menusFactory.saveMenu(menu).then(function(menu) {
             $scope.menus.push(menu);
-            $state.go('menus.list.detail', {
+            $state.go('site.menus.list.detail', {
                 id: menu.id
             });
         });
@@ -79,7 +81,7 @@ myApp.controller('MenusController', function($scope, usersFactory,  toolsFactory
                 menuIndex = $scope.menus.indexOf(menu);
                 $scope.menus.splice(menuIndex, 1);
                 $scope.$apply();
-                $state.go('menus.list');
+                $state.go('site.menus.list');
             },
             function(menu, error) {
                 console.log('Failed to delete menu, with error code: ' + error.message);
@@ -95,7 +97,7 @@ myApp.controller('MenusController', function($scope, usersFactory,  toolsFactory
             return menusFactory.getMenuList();
         }).then(function(results) {
             $scope.$parent.menus = results;
-            $state.go('menus.list.detail', {
+            $state.go('site.menus.list.detail', {
                 id: menu.id
             });
         });
@@ -104,14 +106,9 @@ myApp.controller('MenusController', function($scope, usersFactory,  toolsFactory
         var menuItems = JSON.parse(angular.toJson($scope.items));
         menu.set("items", menuItems);
 
-        parseACL = new Parse.ACL(Parse.User.current());
-        menu.setACL(parseACL);
-        menu.save().then(function() {
-            console.log("menu secured");
-        }, function(error) {
-            console.log(JSON.stringify(error));
-            console.log("menu not secured");
-        });
+        var menuACL = new Parse.ACL(Parse.User.current());
+        menuACL.setPublicReadAccess(true);
+        menu.setACL(menuACL);
     };
 
     $scope.currentUser = usersFactory.getCurrentUser();
@@ -135,7 +132,7 @@ myApp.controller('MenusController', function($scope, usersFactory,  toolsFactory
         $scope.menus = menuList;
 
         // Menu object for use in 'Add Menu' page
-        if ($state.current.name === 'menus.list.add') {
+        if ($state.current.name === 'site.menus.list.add') {
             Menu = Parse.Object.extend("Menu");
             menu = new Menu();
             menu.menuPhotos = [];

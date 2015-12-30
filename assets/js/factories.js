@@ -50,7 +50,8 @@ myApp.factory('usersFactory', function() {
 
     factory.getCurrentUser = function() {
         var parseUser = Parse.User.current();
-        GettersAndSetters(parseUser);
+        if (parseUser !== null)
+            GettersAndSetters(parseUser);
         return parseUser;
     }
 

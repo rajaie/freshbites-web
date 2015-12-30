@@ -3,15 +3,14 @@
         <h2>Menus</h2>
         <ul>
             <li ng-repeat="menu in menus">
-                <a ui-sref="menus.list.detail({id:menu.id})">{{menu.displayName}}</a>
+                <a ui-sref="site.menus.list.detail({id:menu.id})">{{menu.displayName}}</a>
                 <a ng-click="deleteMenu(menu)" href="#">
                     <span class="glyphicon glyphicon-remove-sign red" title="Delete '{{menu.displayName}}' menu"></span>
                 </a>
             </li>
         </ul>
-        <a ui-sref="menus.list.add">Add Menu</a>
+        <a ui-sref="site.menus.list.add">Add Menu</a>
         <br />
-        Hello {{currentUser.username}}
     </div>
     <div class="col-md-9">
         <div ui-view></div>

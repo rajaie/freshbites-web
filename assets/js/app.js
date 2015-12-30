@@ -7,45 +7,49 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.html5Mode({
         enabled: true
     });
-
     $stateProvider
-    .state('default', {
+    .state('site', {
+        abstract: true,
         url: "/",
+        template: '<ui-view/>',
+    })
+    .state('site.home', {
+        url: "",
         templateUrl: "views/home.html",
     })
-    .state('register', {
-        url: "/register",
+    .state('site.register', {
+        url: "register",
         templateUrl: "views/register.html",
         controller: 'SessionController',
     })
-    .state('login', {
-        url: "/login",
+    .state('site.login', {
+        url: "login",
         templateUrl: "views/login.html",
         controller: 'SessionController',
     })
-    .state('orders', {
-        url: "/orders",
+    .state('site.orders', {
+        url: "orders",
         templateUrl: "views/orders.html",
     })
-    .state('payments', {
-        url: "/payments",
+    .state('site.payments', {
+        url: "payments",
         templateUrl: "views/payments.html",
     })
-    .state('profile', {
-        url: "/profile",
+    .state('site.profile', {
+        url: "profile",
         templateUrl: "views/profile.html",
     })
-    .state('profile.edit', {
-        url: "/edit",
+    .state('site.profile.edit', {
+        url: "edit",
         templateUrl: "views/profile.edit.html",
     })
-    .state('messages', {
-      url: "/messages",
+    .state('site.messages', {
+      url: "messages",
       templateUrl: "views/messages.html",
     })
     // ********** Menus **********
-    .state('menus', {
-        url: "/menus",
+    .state('site.menus', {
+        url: "menus",
         abstract: true,
         templateUrl: "views/menus.html",
         resolve: {
@@ -55,28 +59,28 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         },
         controller: 'MenusController',
     })
-    .state('menus.list', {
+    .state('site.menus.list', {
         url: "",
         templateUrl: "views/menus.list.html",
         controller: 'MenusController',
     })
-    .state('menus.list.add', {
+    .state('site.menus.list.add', {
         url: "/add",
         templateUrl: "views/menus.list.add.html",
         controller: 'MenusController',
     })
-    .state('menus.list.detail', {
+    .state('site.menus.list.detail', {
         url: "/:id",
         templateUrl: "views/menus.list.detail.html",
         controller: 'MenusController'
     })
-    .state('menus.list.edit', {
+    .state('site.menus.list.edit', {
         url: "/edit/:id",
         templateUrl: "views/menus.list.edit.html",
         controller: 'MenusController'
     });
 
-    $urlRouterProvider.otherwise("/");
+    // $urlRouterProvider.otherwise("/");
 });
 
 

@@ -12,6 +12,7 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         abstract: true,
         url: "/",
         template: '<ui-view/>',
+        controller: 'SiteController'
     })
     .state('site.home', {
         url: "",
@@ -80,7 +81,7 @@ myApp.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         controller: 'MenusController'
     });
 
-    // $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("/");
 });
 
 

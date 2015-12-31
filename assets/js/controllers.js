@@ -1,7 +1,20 @@
+myApp.controller('SiteController', function($scope, $rootScope, $state, authorizationFactory) {
+    console.log("SiteController here");
+    $rootScope.currentUser = authorizationFactory.getCurrentUser();
+
+    $rootScope.logout = function() {
+        Parse.User.logOut().then(function() {
+            console.log("Logged out");
+            $state.go('site.login');
+            $rootScope.currentUser = authorizationFactory.getCurrentUser();
+        });
+    }
+});
+
 // ****************
 // SimpleController
 // ****************
-myApp.controller('SessionController', function($scope, usersFactory) {
+myApp.controller('SessionController', function($scope, $state, authorizationFactory, $rootScope) {
     $scope.register = function() {
         var user = new Parse.User();
         user.set("username", $scope.username);
@@ -20,23 +33,24 @@ myApp.controller('SessionController', function($scope, usersFactory) {
         Parse.User.logIn($scope.username, $scope.password).then(
             function(user) {
                 console.log("Logged in successfully");
-                $scope.currentUser = usersFactory.getCurrentUser();
+                $state.go('site.home');
+                $rootScope.currentUser = authorizationFactory.getCurrentUser();
                 $scope.username = "";
                 $scope.password = "";
-                $scope.$apply();
+                // $root.$apply();
             },
             function(error) {
                 console.log(error);
             });
     }
 
-    $scope.currentUser = usersFactory.getCurrentUser();
+    // $scope.currentUser = authorizationFactory.getCurrentUser();
 });
 
 // *****
 // Menus
 // *****
-myApp.controller('MenusController', function($scope, usersFactory,  toolsFactory, menusFactory, menuList, $stateParams, $state, $timeout) {
+myApp.controller('MenusController', function($scope, authorizationFactory, toolsFactory, menusFactory, menuList, $stateParams, $state, $timeout) {
     $scope.addItem = function() {
         $scope.items.push({});
     };
@@ -111,7 +125,7 @@ myApp.controller('MenusController', function($scope, usersFactory,  toolsFactory
         menu.setACL(menuACL);
     };
 
-    $scope.currentUser = usersFactory.getCurrentUser();
+    // $scope.currentUser = authorizationFactory.getCurrentUser();
     // Default items array. Used for adding new menu items.
     $scope.items = [{}];
     // Bind selected menu object into scope

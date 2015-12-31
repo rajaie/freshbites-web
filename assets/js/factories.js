@@ -34,7 +34,7 @@ myApp.factory('toolsFactory', function() {
 // *****
 // Users
 // *****
-myApp.factory('usersFactory', function() {
+myApp.factory('authorizationFactory', function() {
     var factory = {};
     var userAttributes = [{
         angular: 'username',

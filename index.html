@@ -20,8 +20,8 @@
     <body>
         <div class="main container">
             <div class="header">
-                <div class="profile-bar" ng-show="currentUser">
-                    Hello {{currentUser.username}}
+                <div class="profile-bar">
+                    <span ng-show="currentUser">Hello, {{currentUser.username}}. Can you hear me? I was wondering if after all these years you'd like to <a href="#" ng-click="logout()">log out</a>.</span>
                 </div>
                 <div class="logo-bar">
                     <a href="/">
@@ -29,15 +29,15 @@
                     </a>
                 </div>
                 <ul class="nav nav-pills">
-                    <li ui-sref-active='active'><a ui-sref="site.register">Register</a></li>
-                    <li ui-sref-active='active'><a ui-sref="site.login">Log in</a></li>
-                    <li ui-sref-active='active'><a ui-sref="site.orders">Orders</a></li>
-                    <li ui-sref-active='active'><a ui-sref="site.menus.list">Menus</a></li>
-                    <li ui-sref-active='active'><a ui-sref="site.messages">Messages</a></li>
-                    <li ui-sref-active='active'><a ui-sref="site.payments">Payments</a></li>
-                    <li ui-sref-active='active'><a ui-sref="site.profile">Profile</a></li>
+                    <li ui-sref-active='active' ng-hide="currentUser"><a ui-sref="site.register">Register</a></li>
+                    <li ui-sref-active='active' ng-hide="currentUser"><a ui-sref="site.login">Log in</a></li>
+                    <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.menus.list">Menus</a></li>
+                    <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.orders">Orders</a></li>
+                    <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.messages">Messages</a></li>
+                    <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.payments">Payments</a></li>
+                    <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.profile">Profile</a></li>
                 </ul>
-            </div><!-- /header -->
+            </div>
             <div class="body" ui-view=""></div>
         </div>
     </body>

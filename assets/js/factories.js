@@ -1,4 +1,4 @@
-myApp.factory('toolsFactory', function() {
+myApp.factory('toolsFactory', function($location) {
     var factory = {};
 
     factory.uploadImage = function(file) {
@@ -34,7 +34,7 @@ myApp.factory('toolsFactory', function() {
 // *****
 // Users
 // *****
-myApp.factory('authorizationFactory', function() {
+myApp.factory('authorizationFactory', function($location) {
     var factory = {};
     var userAttributes = [{
         angular: 'username',
@@ -47,12 +47,36 @@ myApp.factory('authorizationFactory', function() {
             eval('Object.defineProperty(classObject, "' + attributesArray[i].angular + '", {' + 'configurable: true, get: function() {' + 'return this.get("' + attributesArray[i].parse + '");' + '},' + 'set: function(aValue) {' + 'this.set("' + attributesArray[i].parse + '", aValue);' + '}' + '});');
         }
     }
-
     factory.getCurrentUser = function() {
         var parseUser = Parse.User.current();
         if (parseUser !== null)
             GettersAndSetters(parseUser);
         return parseUser;
+    }
+
+    factory.checkAuthorized = function() {
+        return new Promise(function(resolve, reject) {
+            if (!factory.getCurrentUser()) {
+                console.log("Access denied. Not logged in.");
+                $location.url('/');
+                reject();
+            }
+            else {
+                resolve();
+            }
+        });
+    }
+    factory.checkUnauthorized = function() {
+        return new Promise(function(resolve, reject) {
+            if (factory.getCurrentUser()) {
+                console.log("Access denied. Already logged in.");
+                $location.url('/');
+                reject();
+            }
+            else {
+                resolve();
+            }
+        });
     }
 
     return factory;
@@ -77,6 +101,9 @@ myApp.factory('menusFactory', function() {
         angular: 'items',
         parse: 'items'
     }, {
+        angular: 'owner',
+        parse: 'owner'
+    }, {
         angular: 'price',
         parse: 'price'
     }];
@@ -98,14 +125,20 @@ myApp.factory('menusFactory', function() {
     factory.getMenuList = function() {
         var parseMenu = Parse.Object.extend("Menu");
         var query = new Parse.Query(parseMenu);
+
         query.select("name");
+        query.equalTo("owner", Parse.User.current().get("username"));
+
         return query.find().then(
             function(menus) {
                 GettersAndSetters(menus, menuAttributes);
                 SetDisplayName(menus);
                 return menus;
+            },
+            function(error) {
+                console.log("Failed to getMenuList. Code: " + error.code + ". Message: " + error.message);
             }
-        )
+        );
     };
     // Returns a list of menu names
     factory.getMenu = function(menu) {
@@ -116,8 +149,9 @@ myApp.factory('menusFactory', function() {
             return result;
         });
     };
-    factory.saveMenu = function(parseObject) {
-        result = parseObject.save(null).then(
+    factory.saveMenu = function(menu) {
+        menu.set("owner", Parse.User.current().get("username"));
+        result = menu.save(null).then(
             function(menu) {
                 results = [menu];
                 GettersAndSetters(results, menuAttributes);

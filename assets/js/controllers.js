@@ -1,12 +1,14 @@
-myApp.controller('SiteController', function($scope, $rootScope, $state, authorizationFactory) {
-    console.log("SiteController here");
-    $rootScope.currentUser = authorizationFactory.getCurrentUser();
+myApp.controller('SiteController', function($scope, $rootScope, $state, authorizationFactory, $location) {
 
+    $rootScope.currentUser = authorizationFactory.getCurrentUser();
     $rootScope.logout = function() {
         Parse.User.logOut().then(function() {
-            console.log("Logged out");
-            $state.go('site.login');
+            console.log("Logged out successfully");
             $rootScope.currentUser = authorizationFactory.getCurrentUser();
+            $state.go('site.home');
+            $scope.$apply();
+        }, function(error) {
+            console.log("Failed to log out. Code: " + error.code + ". Message: " + error.message);
         });
     }
 });
@@ -23,6 +25,9 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
         user.signUp().then(
             function(user) {
                 console.log("User '" + user.get("username") + "' has been created!");
+                $rootScope.currentUser = authorizationFactory.getCurrentUser();
+                $state.go('site.home');
+                $scope.$apply();
             },
             function(user, error) {
                 console.log("Error: " + error.code + " " + error.message);
@@ -43,6 +48,21 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
                 console.log(error);
             });
     }
+    $scope.updateProfile = function() {
+        var user = Parse.User.current();
+        // user.set("password", $scope.password);
+        user.set("name", $scope.firstlastname);
+
+        user.save().then(function(user) {
+            console.log("User profile updated successfully");
+            $state.go('site.home')
+        //     Parse.User.logOut().then(function() {
+        //         $rootScope.currentUser = authorizationFactory.getCurrentUser();
+        //         $state.go('site.home')
+        //         $scope.$apply();
+        //     });
+        });
+    }
 
     // $scope.currentUser = authorizationFactory.getCurrentUser();
 });
@@ -50,7 +70,7 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
 // *****
 // Menus
 // *****
-myApp.controller('MenusController', function($scope, authorizationFactory, toolsFactory, menusFactory, menuList, $stateParams, $state, $timeout) {
+myApp.controller('MenusController', function($scope, authorizationFactory, toolsFactory, menusFactory, $stateParams, $state, $timeout) {
     $scope.addItem = function() {
         $scope.items.push({});
     };
@@ -83,6 +103,7 @@ myApp.controller('MenusController', function($scope, authorizationFactory, tools
 
         menusFactory.saveMenu(menu).then(function(menu) {
             $scope.menus.push(menu);
+            $scope.$apply();
             $state.go('site.menus.list.detail', {
                 id: menu.id
             });
@@ -125,33 +146,33 @@ myApp.controller('MenusController', function($scope, authorizationFactory, tools
         menu.setACL(menuACL);
     };
 
-    // $scope.currentUser = authorizationFactory.getCurrentUser();
-    // Default items array. Used for adding new menu items.
-    $scope.items = [{}];
-    // Bind selected menu object into scope
-    menuId = $stateParams.id;
+    menusFactory.getMenuList().then(function(menuList) {
+        // Default items array. Used for adding new menu items.
+        $scope.items = [{}];
+        // Bind selected menu object into scope
+        menuId = $stateParams.id;
 
-    if (menuId !== undefined) {
-        for (var i = 0; i < menuList.length; i++) {
-            if (menuList[i].id == menuId) {
-                menusFactory.getMenu(menuList[i]).then(function(menu) {
-                    $scope.menu = menu;
-                    $scope.items = menu.items;
-                    $scope.$apply();
-                });
-                break;
+        if (menuId !== undefined) {
+            for (var i = 0; i < menuList.length; i++) {
+                if (menuList[i].id == menuId) {
+                    menusFactory.getMenu(menuList[i]).then(function(menu) {
+                        $scope.menu = menu;
+                        $scope.items = menu.items;
+                        $scope.$apply();
+                    });
+                    break;
+                }
+            }
+        } else {
+            $scope.menus = menuList;
+            $scope.$apply();
+            // Menu object for use in 'Add Menu' page
+            if ($state.current.name === 'site.menus.list.add') {
+                Menu = Parse.Object.extend("Menu");
+                menu = new Menu();
+                menu.menuPhotos = [];
+                $scope.menu = menu;
             }
         }
-    } else {
-        $scope.menus = menuList;
-
-        // Menu object for use in 'Add Menu' page
-        if ($state.current.name === 'site.menus.list.add') {
-            Menu = Parse.Object.extend("Menu");
-            menu = new Menu();
-            menu.menuPhotos = [];
-            $scope.menu = menu;
-        }
-    }
-
+    });
 });

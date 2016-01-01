@@ -19,6 +19,7 @@ body {
 }
 
 .header {
+    padding-top: 13px;
 }
 
 .profile-bar {
@@ -29,7 +30,6 @@ body {
 }
 .logo-bar {
     text-align: center;
-    margin-top: 15px;
 }
 
 .logo {

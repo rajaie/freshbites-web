@@ -55,6 +55,7 @@ myApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                     return authorizationFactory.checkAuthorized();
                 }
             },
+            controller: 'OrdersController',
         })
         // ********** Payments **********
         // ***************************

@@ -1,3 +1,6 @@
+// *****
+// Tools
+// *****
 myApp.factory('toolsFactory', function($location) {
     var factory = {};
 
@@ -14,7 +17,7 @@ myApp.factory('toolsFactory', function($location) {
     factory.uploadImages = function(fileList) {
         uploadedImages = [];
         return new Promise(function(resolve, reject) {
-            if (fileList.length == 0 )
+            if (fileList.length == 0)
                 resolve(uploadedImages);
             for (var i = 0; i < fileList.length; i++) {
                 factory.uploadImage(fileList[i]).then(
@@ -31,6 +34,84 @@ myApp.factory('toolsFactory', function($location) {
     return factory;
 });
 
+
+// *****
+// Orders
+// *****
+myApp.factory('ordersFactory', function($location, menusFactory) {
+    var factory = {};
+    var orderAttributes = [{
+        angular: 'details',
+        parse: 'details'
+    }, {
+        angular: 'status',
+        parse: 'status'
+    }, {
+        angular: 'menuId',
+        parse: 'menuId'
+    }, {
+        angular: 'customer',
+        parse: 'customer'
+    }, {
+        angular: 'caterer',
+        parse: 'caterer'
+    }];
+
+    function GettersAndSetters(results) {
+        var attributesArray = orderAttributes;
+        for (var x = 0; x < results.length; x++) {
+            classObject = results[x];
+            for (var i = 0; i < attributesArray.length; i++) {
+                eval('Object.defineProperty(classObject, "' + attributesArray[i].angular + '", {' + 'configurable: true, get: function() {' + 'return this.get("' + attributesArray[i].parse + '");' + '},' + 'set: function(aValue) {' + 'this.set("' + attributesArray[i].parse + '", aValue);' + '}' + '});');
+            }
+        }
+    }
+
+    function getOrders() {
+        return new Promise(function(resolve, reject) {
+            var parseOrder = Parse.Object.extend("Order");
+            var query = new Parse.Query(parseOrder);
+            query.equalTo("caterer", Parse.User.current().get("username"));
+
+            query.find().then(
+                function(orders) {
+                    GettersAndSetters(orders);
+                    resolve(orders);
+                },
+                function(error) {
+                    console.log("Failed to getOrdersList. Code: " + error.code + ". Message: " + error.message);
+                }
+            );
+        });
+    }
+
+    function menuIdNameMap(menus) {
+        menusMap = new Map();
+        for (var i = 0; i < menus.length; i++) {
+            menusMap.set(menus[i].id, menus[i].get("name"));
+        }
+        return menusMap;
+    }
+
+    // Returns a list of orders with their associated menu names
+    factory.getOrdersWithMenuNames = function() {
+        menus = new Map();
+        return new Promise(function(resolve, reject) {
+            menusFactory.getMenuList().then(function(results) {
+                menus = menuIdNameMap(results);
+                return getOrders();
+            }).then(function(orders) {
+                for (var i = 0; i < orders.length; i++) {
+                    orders[i].menuName = menus.get(orders[i].menuId);
+                    resolve(orders);
+                }
+            });
+        });
+    };
+
+    return factory;
+});
+
 // *****
 // Users
 // *****
@@ -39,10 +120,16 @@ myApp.factory('authorizationFactory', function($location) {
     var userAttributes = [{
         angular: 'username',
         parse: 'username'
+    }, {
+        angular: 'address',
+        parse: 'address'
+    }, {
+        angular: 'phone',
+        parse: 'phone'
     }];
 
     function GettersAndSetters(classObject) {
-        attributesArray = userAttributes;
+        var attributesArray = userAttributes;
         for (var i = 0; i < attributesArray.length; i++) {
             eval('Object.defineProperty(classObject, "' + attributesArray[i].angular + '", {' + 'configurable: true, get: function() {' + 'return this.get("' + attributesArray[i].parse + '");' + '},' + 'set: function(aValue) {' + 'this.set("' + attributesArray[i].parse + '", aValue);' + '}' + '});');
         }
@@ -60,8 +147,7 @@ myApp.factory('authorizationFactory', function($location) {
                 console.log("Access denied. Not logged in.");
                 $location.url('/');
                 reject();
-            }
-            else {
+            } else {
                 resolve();
             }
         });
@@ -72,8 +158,7 @@ myApp.factory('authorizationFactory', function($location) {
                 console.log("Access denied. Already logged in.");
                 $location.url('/');
                 reject();
-            }
-            else {
+            } else {
                 resolve();
             }
         });
@@ -116,6 +201,7 @@ myApp.factory('menusFactory', function() {
             }
         }
     }
+
     function SetDisplayName(menus) {
         for (var i = 0; i < menus.length; i++) {
             menus[i].displayName = menus[i].get("name");

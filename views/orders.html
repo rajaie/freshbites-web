@@ -1,3 +1,8 @@
 <div>
     <h2>Orders</h2>
+    <ul>
+        <li ng-repeat="order in orders">
+            {{order.createdAt}} - {{order.details}} - {{order.status}} - {{order.caterer}} - {{order.customer}} - {{order.menuName}}
+       </li>
+    </ul>
 </div>

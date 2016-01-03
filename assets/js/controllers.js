@@ -14,8 +14,20 @@ myApp.controller('SiteController', function($scope, $rootScope, $state, authoriz
 });
 
 // ****************
-// SimpleController
+// OrdersController
 // ****************
+myApp.controller('OrdersController', function($scope, $rootScope, $state, ordersFactory, $location) {
+    ordersFactory.getOrdersWithMenuNames().then(function(orders) {
+        $scope.orders = orders;
+        $scope.$apply();
+    }, function(error) {
+        console.log("Failed to get orders list");
+    });
+});
+
+// *****************
+// SessionController
+// *****************
 myApp.controller('SessionController', function($scope, $state, authorizationFactory, $rootScope) {
     $scope.register = function() {
         var user = new Parse.User();
@@ -42,20 +54,23 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
                 $rootScope.currentUser = authorizationFactory.getCurrentUser();
                 $scope.username = "";
                 $scope.password = "";
-                // $root.$apply();
+                $rootScope.$apply();
             },
             function(error) {
                 console.log(error);
+                alert("Invalid username/password combination");
             });
     }
     $scope.updateProfile = function() {
         var user = Parse.User.current();
         // user.set("password", $scope.password);
         user.set("name", $scope.firstlastname);
+        user.set("address", $scope.address);
+        user.set("phone", $scope.phone);
 
         user.save().then(function(user) {
             console.log("User profile updated successfully");
-            $state.go('site.home')
+            // $state.go('site.home')
         //     Parse.User.logOut().then(function() {
         //         $rootScope.currentUser = authorizationFactory.getCurrentUser();
         //         $state.go('site.home')
@@ -63,8 +78,11 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
         //     });
         });
     }
-
-    // $scope.currentUser = authorizationFactory.getCurrentUser();
+    if (Parse.User.current()) {
+        $scope.firstlastname = Parse.User.current().get("name");
+        $scope.address = Parse.User.current().get("address");
+        $scope.phone = Parse.User.current().get("phone");
+    }
 });
 
 // *****

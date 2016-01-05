@@ -71,6 +71,7 @@ myApp.factory('ordersFactory', function($location, menusFactory) {
         return new Promise(function(resolve, reject) {
             var parseOrder = Parse.Object.extend("Order");
             var query = new Parse.Query(parseOrder);
+
             query.equalTo("caterer", Parse.User.current().get("username"));
 
             query.find().then(
@@ -79,7 +80,7 @@ myApp.factory('ordersFactory', function($location, menusFactory) {
                     resolve(orders);
                 },
                 function(error) {
-                    console.log("Failed to getOrdersList. Code: " + error.code + ". Message: " + error.message);
+                    console.log("Failed to getOrders. Code: " + error.code + ". Message: " + error.message);
                 }
             );
         });
@@ -97,10 +98,12 @@ myApp.factory('ordersFactory', function($location, menusFactory) {
     factory.getOrdersWithMenuNames = function() {
         menus = new Map();
         return new Promise(function(resolve, reject) {
+            // Get menus associated with current caterer
             menusFactory.getMenuList().then(function(results) {
                 menus = menuIdNameMap(results);
                 return getOrders();
             }).then(function(orders) {
+                // Map the menu names to the menuId of the customer order
                 for (var i = 0; i < orders.length; i++) {
                     orders[i].menuName = menus.get(orders[i].menuId);
                     resolve(orders);

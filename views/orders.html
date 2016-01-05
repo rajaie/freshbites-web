@@ -2,7 +2,14 @@
     <h2>Orders</h2>
     <ul>
         <li ng-repeat="order in orders">
-            {{order.createdAt}} - {{order.details}} - {{order.status}} - {{order.caterer}} - {{order.customer}} - {{order.menuName}}
+            <ul>
+            <li><strong>order date:</strong> {{order.createdAt}}</li>
+            <li><strong>extra info:</strong> {{order.details}}</li>
+            <li><strong>status:</strong> {{order.status}}</li>
+            <li><strong>customer name:</strong> {{order.customer}}</li>
+            <li><strong>menu ordered:</strong> {{order.menuName}}</li>
+            <li><a href="#">(approve)</a> - <a href="#">(reject)</a> - <a href="#">(mark complete)</a></li>
+            </ul>
        </li>
     </ul>
 </div>

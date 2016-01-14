@@ -37,6 +37,7 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
         user.signUp().then(
             function(user) {
                 console.log("User '" + user.get("username") + "' has been created!");
+                console.log(user);
                 $rootScope.currentUser = authorizationFactory.getCurrentUser();
                 $state.go('site.home');
                 $scope.$apply();
@@ -50,6 +51,7 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
         Parse.User.logIn($scope.username, $scope.password).then(
             function(user) {
                 console.log("Logged in successfully");
+                console.log(user);
                 $state.go('site.home');
                 $rootScope.currentUser = authorizationFactory.getCurrentUser();
                 $scope.username = "";
@@ -70,6 +72,7 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
 
         user.save().then(function(user) {
             console.log("User profile updated successfully");
+            console.log(JSON.stringify(user));
             // $state.go('site.home')
         //     Parse.User.logOut().then(function() {
         //         $rootScope.currentUser = authorizationFactory.getCurrentUser();
@@ -120,11 +123,11 @@ myApp.controller('MenusController', function($scope, authorizationFactory, tools
         menu.set("menuPhotos", $scope.menu.menuPhotos);
 
         menusFactory.saveMenu(menu).then(function(menu) {
-            $scope.menus.push(menu);
-            $scope.$apply();
+            $scope.$parent.menus.push(menu);
             $state.go('site.menus.list.detail', {
                 id: menu.id
             });
+            $scope.$parent.$apply();
         });
     };
     $scope.deleteMenu = function(menu) {

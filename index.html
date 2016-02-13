@@ -13,32 +13,34 @@
         <script src="assets/js/factories.js"></script>
         <script src="assets/js/directives.js"></script>
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
+        <!-- fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400,600,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,400,200,300' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+        <!-- fonts end -->
         <link rel="icon" type="image/png" href="assets/img/favicon.png">
         <title>FreshBites.com&trade; - Caterer Portal</title>
     </head>
     <body>
-        <div class="main container">
-            <div class="header">
-                <div class="profile-bar">
-                    <span ng-show="currentUser">Hello, {{currentUser.username}}. (<a href="#" ng-click="logout()">log out</a>)</span>
-                </div>
-                <div class="logo-bar">
-                    <a href="/">
-                        <img src="assets/img/logo.png" class="logo" />
-                    </a>
-                </div>
-                <ul class="nav nav-pills">
-                    <li ui-sref-active='active' ng-hide="currentUser"><a ui-sref="site.register">Register</a></li>
-                    <li ui-sref-active='active' ng-hide="currentUser"><a ui-sref="site.login">Log in</a></li>
-                    <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.menus.list">Menus</a></li>
-                    <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.orders">Orders</a></li>
-                    <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.messages">Messages</a></li>
-                    <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.payments">Payments</a></li>
-                    <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.profile">Profile</a></li>
-                </ul>
-            </div>
-            <div class="body" ui-view=""></div>
+        <div class="main container-fluid">
+          <div class="row intro">
+              <!-- logo -->
+              <a class="fb-logo pull-left" href="/"> FRESHBITES </a>
+              <!-- navigation bar -->
+              <ul class="pull-right">
+                <li ui-sref-active='active' ng-hide="currentUser"><a ui-sref="site.register">Register</a></li>
+                <li ui-sref-active='active' ng-hide="currentUser"><a ui-sref="site.login">Log in</a></li>
+                <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.menus.list">Menus</a></li>
+                <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.orders">Orders</a></li>
+                <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.messages">Messages</a></li>
+                <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.payments">Payments</a></li>
+                <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.profile">Profile</a></li>
+              </ul>
+          </div>
         </div>
+        <div class="body" ui-view=""></div>
     </body>
 </html>

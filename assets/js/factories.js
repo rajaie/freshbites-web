@@ -1,6 +1,6 @@
-// *****
-// Tools
-// *****
+// ************************
+// ***** toolsFactory *****
+// ************************
 myApp.factory('toolsFactory', function($location) {
     var factory = {};
 
@@ -35,9 +35,9 @@ myApp.factory('toolsFactory', function($location) {
 });
 
 
-// *****
-// Orders
-// *****
+// *************************
+// ***** ordersFactory *****
+// *************************
 myApp.factory('ordersFactory', function($location, menusFactory) {
     var factory = {};
     var orderAttributes = [{
@@ -93,7 +93,6 @@ myApp.factory('ordersFactory', function($location, menusFactory) {
         }
         return menusMap;
     }
-
     // Returns a list of orders with their associated menu names
     factory.getOrdersWithMenuNames = function() {
         menus = new Map();
@@ -115,9 +114,88 @@ myApp.factory('ordersFactory', function($location, menusFactory) {
     return factory;
 });
 
-// *****
-// Users
-// *****
+// *************************
+// ***** reviewsFactory ****
+// *************************
+myApp.factory('reviewsFactory', function($location, menusFactory) {
+    var factory = {};
+    var reviewAttributes = [{
+        angular: 'opinion',
+        parse: 'opinion'
+    }, {
+        angular: 'numberOfStars',
+        parse: 'numberOfStars'
+    }, {
+        angular: 'catererId',
+        parse: 'catererId'
+    }, {
+        angular: 'menuItemObjectID',
+        parse: 'menuItemObjectID'
+    }, {
+        angular: 'customerName',
+        parse: 'name'
+    }];
+
+    function GettersAndSetters(results) {
+        var attributesArray = reviewAttributes;
+        for (var x = 0; x < results.length; x++) {
+            classObject = results[x];
+            for (var i = 0; i < attributesArray.length; i++) {
+                eval('Object.defineProperty(classObject, "' + attributesArray[i].angular + '", {' + 'configurable: true, get: function() {' + 'return this.get("' + attributesArray[i].parse + '");' + '},' + 'set: function(aValue) {' + 'this.set("' + attributesArray[i].parse + '", aValue);' + '}' + '});');
+            }
+        }
+    }
+
+    function getReviews() {
+        return new Promise(function(resolve, reject) {
+            var parseOrder = Parse.Object.extend("Feedback");
+            var query = new Parse.Query(parseOrder);
+
+            query.equalTo("catererId", Parse.User.current().get("username"));
+
+            query.find().then(
+                function(reviews) {
+                    GettersAndSetters(reviews);
+                    resolve(reviews);
+                },
+                function(error) {
+                    console.log("Failed to getReviews. Code: " + error.code + ". Message: " + error.message);
+                }
+            );
+        });
+    }
+
+    function menuIdNameMap(menus) {
+        menusMap = new Map();
+        for (var i = 0; i < menus.length; i++) {
+            menusMap.set(menus[i].id, menus[i].get("name"));
+        }
+        return menusMap;
+    }
+    // Returns a list of reviews with their associated menu names
+    factory.getReviewsWithMenuNames = function() {
+        menus = new Map();
+        return new Promise(function(resolve, reject) {
+            // Get menus associated with current caterer
+            menusFactory.getMenuList().then(function(results) {
+                menus = menuIdNameMap(results);
+                return getReviews();
+            }).then(function(reviews) {
+                // Map the menu names to the menuId of the customer order
+                for (var i = 0; i < reviews.length; i++) {
+                    reviews[i].menuName = menus.get(reviews[i].menuItemObjectID);
+                    resolve(reviews);
+                }
+            });
+        });
+    };
+
+    return factory;
+});
+
+// *********************
+// Users & Authorization
+// *********************
 myApp.factory('authorizationFactory', function($location) {
     var factory = {};
     var userAttributes = [{
@@ -171,9 +249,9 @@ myApp.factory('authorizationFactory', function($location) {
 
 });
 
-// *****
-// Menus
-// *****
+// ************************
+// ***** menusFactory *****
+// ************************
 myApp.factory('menusFactory', function() {
     var factory = {};
     var menuAttributes = [{

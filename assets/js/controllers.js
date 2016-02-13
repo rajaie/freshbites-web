@@ -25,6 +25,19 @@ myApp.controller('OrdersController', function($scope, $rootScope, $state, orders
     });
 });
 
+// ****************
+// ReviewsController
+// ****************
+myApp.controller('ReviewsController', function($scope, $rootScope, $state, reviewsFactory, $location) {
+    reviewsFactory.getReviewsWithMenuNames().then(function(reviews) {
+        $scope.reviews = reviews;
+        $scope.menuFilter = "";
+        $scope.$apply();
+    }, function(error) {
+        console.log("Failed to get reviews list");
+    });
+});
+
 // *****************
 // SessionController
 // *****************
@@ -88,9 +101,9 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
     }
 });
 
-// *****
-// Menus
-// *****
+// ***************
+// MenusController
+// ***************
 myApp.controller('MenusController', function($scope, authorizationFactory, toolsFactory, menusFactory, $stateParams, $state, $timeout) {
     $scope.addItem = function() {
         $scope.items.push({});

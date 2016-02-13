@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ui.router']);
+var myApp = angular.module('myApp', ['ui.router', 'angular.filter']);
 
 myApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
 
@@ -14,14 +14,14 @@ myApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             template: '<ui-view/>',
             controller: 'SiteController'
         })
-        // ********** Home **********
+        // ********** Home ***********
         // ***************************
         .state('site.home', {
             url: "",
             templateUrl: "views/home.html",
         })
         // ********** Reigster **********
-        // ***************************
+        // ******************************
         .state('site.register', {
             url: "register",
             templateUrl: "views/register.html",
@@ -46,7 +46,7 @@ myApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             },
         })
         // ********** Orders **********
-        // ***************************
+        // ****************************
         .state('site.orders', {
             url: "orders",
             templateUrl: "views/orders.html",
@@ -58,7 +58,7 @@ myApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             controller: 'OrdersController',
         })
         // ********** Payments **********
-        // ***************************
+        // ******************************
         .state('site.payments', {
             url: "payments",
             templateUrl: "views/payments.html",
@@ -69,7 +69,7 @@ myApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             },
         })
         // ********** Profile **********
-        // ***************************
+        // *****************************
         .state('site.profile', {
             url: "profile",
             templateUrl: "views/profile.html",
@@ -126,7 +126,20 @@ myApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             url: "/edit/:id",
             templateUrl: "views/menus.list.edit.html",
             controller: 'MenusController'
-        });
+        })
+        // ********** Reviews **********
+        // *****************************
+        .state('site.reviews', {
+            url: "reviews",
+            templateUrl: "views/reviews.html",
+            resolve: {
+                auth: function(authorizationFactory) {
+                    return authorizationFactory.checkAuthorized();
+                }
+            },
+            controller: 'ReviewsController',
+        })
+        ;
 
     $urlRouterProvider.otherwise("/");
 });

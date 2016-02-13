@@ -1,0 +1,16 @@
+<div>
+    <h2>Reviews</h2>
+    filterby menu name:
+    <input type="text" ng-model="query">
+    <ul>
+        <li ng-repeat="review in reviews | filter:{menuName:query} | orderBy:'orderQuery'">
+            <ul style="border-bottom: 3px solid black;">
+            <li><strong>review date:</strong> {{review.createdAt}}</li>
+            <li><strong>review:</strong> {{review.opinion}}</li>
+            <li><strong>rating:</strong> {{review.numberOfStars}}/5</li>
+            <li><strong>customer name:</strong> {{review.customerName}}</li>
+            <li><strong>menu ordered:</strong> {{review.menuName}}</li>
+            </ul>
+       </li>
+    </ul>
+</div>

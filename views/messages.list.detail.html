@@ -1,0 +1,16 @@
+<h2>Conversation ({{customerName}})</h2>
+<a href="#" ng-click="refreshConversation()">Refresh</a>
+
+<ul ng-repeat="message in messages | orderBy:'createdAt'">
+    <ul style="border-bottom: 2px solid black;">
+    <li>date: {{message.createdAt}}</li>
+    <li>from: {{message.from}}</li>
+    <li>to: {{message.to}}</li>
+    <li>content: {{message.content}}</li>
+    </ul>
+</ul>
+<p>
+    <textarea rows="3" cols="40" ng-model="reply" placeholder="Reply" /></textarea>
+    <br />
+    <button class="btn btn-primary" ng-click="sendMessage()">Reply</button>
+</p>

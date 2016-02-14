@@ -38,7 +38,6 @@ myApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             url: "login",
             templateUrl: "views/login.html",
             controller: 'SessionController',
-            secure: true,
             resolve: {
                 auth: function(authorizationFactory) {
                     return authorizationFactory.checkUnauthorized();
@@ -84,14 +83,27 @@ myApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             url: "edit",
             templateUrl: "views/profile.edit.html",
         })
+        // ********** Messages **********
+        // ******************************
         .state('site.messages', {
             url: "messages",
+            abstract: true,
             templateUrl: "views/messages.html",
             resolve: {
                 auth: function(authorizationFactory) {
                     return authorizationFactory.checkAuthorized();
                 }
             },
+        })
+        .state('site.messages.list', {
+            url: "",
+            templateUrl: "views/messages.list.html",
+            controller: 'MessagesController',
+        })
+        .state('site.messages.list.detail', {
+            url: "/:customer",
+            templateUrl: "views/messages.list.detail.html",
+            controller: 'MessagesController',
         })
         // ********** Menus **********
         // ***************************
@@ -105,7 +117,6 @@ myApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                 }
             },
             controller: 'MenusController',
-            secure: true,
         })
         .state('site.menus.list', {
             url: "",

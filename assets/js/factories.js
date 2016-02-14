@@ -193,6 +193,107 @@ myApp.factory('reviewsFactory', function($location, menusFactory) {
     return factory;
 });
 
+// **************************
+// ***** messagesFactory ****
+// **************************
+myApp.factory('messagesFactory', function($location) {
+    var factory = {};
+    var messageAttributes = [{
+        angular: 'from',
+        parse: 'from'
+    }, {
+        angular: 'to',
+        parse: 'to'
+    }, {
+        angular: 'content',
+        parse: 'content'
+    }];
+
+    function GettersAndSetters(results) {
+        var attributesArray = messageAttributes;
+        for (var x = 0; x < results.length; x++) {
+            classObject = results[x];
+            for (var i = 0; i < attributesArray.length; i++) {
+                eval('Object.defineProperty(classObject, "' + attributesArray[i].angular + '", {' + 'configurable: true, get: function() {' + 'return this.get("' + attributesArray[i].parse + '");' + '},' + 'set: function(aValue) {' + 'this.set("' + attributesArray[i].parse + '", aValue);' + '}' + '});');
+            }
+        }
+    }
+
+    function eliminateDuplicateCustomers(customerList) {
+        uniqueCustomers = [];
+        for (var i = 0; i < customerList.length; i++) {
+            customerName = customerList[i].from;
+            if ($.inArray(customerName, uniqueCustomers) === -1) {
+                uniqueCustomers.push(customerName);
+            }
+        }
+    }
+
+    // Get a unique list of customers who have contacted the caterer
+    factory.getUniqueCustomerContacts = function() {
+
+        var parseMessage = Parse.Object.extend("Message");
+        var query = new Parse.Query(parseMessage);
+
+        query.select("from");
+        // get message addressed to caterer
+        query.equalTo("to", Parse.User.current().get("username"));
+
+        return query.find().then(
+            function(customers) {
+                GettersAndSetters(customers);
+
+                // Eliminate duplicate customer names
+                uniqueCustomers = [];
+                for (var i = 0; i < customers.length; i++) {
+                    customerName = customers[i].from;
+                    if ($.inArray(customerName, uniqueCustomers) === -1) {
+                        uniqueCustomers.push(customerName);
+                    }
+                }
+
+                return uniqueCustomers;
+
+            },
+            function(error) {
+                console.log("Failed to getCustomers. Code: " + error.code + ". Message: " + error.message);
+            }
+        );
+    };
+
+    factory.getMessageList = function(fromName) {
+        var messageList = [];
+        var parseMessage = Parse.Object.extend("Message");
+
+        var fromCustomerToCaterer = new Parse.Query(parseMessage);
+        fromCustomerToCaterer.equalTo("from", fromName);
+        fromCustomerToCaterer.equalTo("to", Parse.User.current().get("username"));
+
+        var fromCatererToCustomer = new Parse.Query(parseMessage);
+        fromCatererToCustomer.equalTo("from", Parse.User.current().get("username"));
+        fromCatererToCustomer.equalTo("to", fromName);
+
+        return fromCustomerToCaterer.find().then(
+            function(customerToCatererMessages) {
+                messageList.push.apply(messageList, customerToCatererMessages);
+                return fromCatererToCustomer.find();
+            },
+            function(error) {
+                console.log("Failed to getMessageList. Code: " + error.code + ". Message: " + error.message);
+            }
+        ).then(function(catererToCustomerMessages) {
+
+            messageList.push.apply(messageList, catererToCustomerMessages);
+
+            GettersAndSetters(messageList);
+            return messageList;
+        });
+
+    };
+
+    return factory;
+});
+
 // *********************
 // Users & Authorization
 // *********************

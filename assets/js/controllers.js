@@ -87,11 +87,11 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
             console.log("User profile updated successfully");
             console.log(JSON.stringify(user));
             // $state.go('site.home')
-        //     Parse.User.logOut().then(function() {
-        //         $rootScope.currentUser = authorizationFactory.getCurrentUser();
-        //         $state.go('site.home')
-        //         $scope.$apply();
-        //     });
+            //     Parse.User.logOut().then(function() {
+            //         $rootScope.currentUser = authorizationFactory.getCurrentUser();
+            //         $state.go('site.home')
+            //         $scope.$apply();
+            //     });
         });
     }
     if (Parse.User.current()) {
@@ -99,6 +99,57 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
         $scope.address = Parse.User.current().get("address");
         $scope.phone = Parse.User.current().get("phone");
     }
+});
+
+// ***************
+// MessagesController
+// ***************
+myApp.controller('MessagesController', function($scope, $rootScope, $state, $stateParams, messagesFactory, $location) {
+    function getConversation() {
+        messagesFactory.getMessageList($stateParams.customer).then(function(messages) {
+            $scope.messages = messages;
+            $scope.$apply();
+        });
+    };
+
+    $scope.refreshConversation = function() {
+        getConversation();
+    };
+
+    $scope.sendMessage = function() {
+        Message = Parse.Object.extend("Message");
+        message = new Message();
+
+        message.set("from", Parse.User.current().get("username"));
+        message.set("to", $stateParams.customer);
+        message.set("content", $scope.reply);
+
+        result = message.save(null).then(
+            function(message) {
+                console.log("Message sent successfully");
+                getConversation();
+                $scope.reply = "";
+            },
+            function(error) {
+                console.log('Failed to save Message object. Error message: ' + error.message);
+            }
+        );
+    };
+
+    messagesFactory.getUniqueCustomerContacts().then(function(customers) {
+        $scope.customers = customers;
+        $scope.$apply();
+    }, function(error) {
+        console.log("Failed to get customers list");
+    });
+
+    $scope.customerName = $stateParams.customer;
+    customer = $stateParams.customer;
+
+    if (customer !== undefined) {
+        getConversation();
+    }
+
 });
 
 // ***************
@@ -170,14 +221,6 @@ myApp.controller('MenusController', function($scope, authorizationFactory, tools
                 id: menu.id
             });
         });
-    };
-    $scope.secureMenu = function(menu) {
-        var menuItems = JSON.parse(angular.toJson($scope.items));
-        menu.set("items", menuItems);
-
-        var menuACL = new Parse.ACL(Parse.User.current());
-        menuACL.setPublicReadAccess(true);
-        menu.setACL(menuACL);
     };
 
     menusFactory.getMenuList().then(function(menuList) {

@@ -1,0 +1,179 @@
+.menu {
+    margin-left: 55px;
+}
+
+.menu h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.menu li {
+    list-style-type: none;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    width: 70%;
+    font-family: 'Raleway', sans-serif;
+    border: 3px solid black;
+    text-align: center;
+}
+
+.menu .active-menu {
+    border-color: #65C6BB;
+    background-color: #65C6BB;
+    color: white;
+}
+
+/* from ui-sref-active */
+.active > a {
+    border-bottom: 2.5px solid #65C6BB;
+    padding-bottom: 5px;
+}
+
+.menu .active-menu {
+    text-decoration: none;
+    color: white;
+}
+
+.menu .menu-link {
+    text-decoration: none;
+}
+
+.menu .add-menu {
+    font-size: 2em;
+    text-decoration: none;
+    color: black;
+    font-weight: lighter;
+}
+
+.menu .add-menu i {
+    margin-right: 12px;
+}
+
+.new-menu p input, .new-menu textarea {
+    outline: none;
+    border: 1px solid #888888;
+    width: 80%;
+    text-align: center;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    font-size: 1.5em;
+    outline: none;
+    font-weight: 300;
+}
+
+.new-menu p input:focus, .new-menu textarea:focus{
+    border: 2px solid #888888;
+    outline: none;
+    outline-color: none;
+}
+
+.new-menu .item-heading {
+    font-size: 1.5em;
+    font-weight: 300;
+}
+
+.new-menu .add-item {
+    font-size: 2em;
+    font-family: 'Playfair Display', serif;
+}
+
+.new-menu .add-item a {
+    font-size: 1.2em;
+    text-decoration: none;
+    color: black;
+    margin-left: 5px;
+}
+
+.new-menu .item-heading .remove {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.8em;
+}
+
+.new-menu .item-heading .remove:hover {
+    color: #e74c3c;
+}
+
+.fa-plus-circle:hover {
+    color: #65C6BB;
+    transition: .3s;
+}
+
+.carousel-inner img {
+    height: 100%;
+}
+
+.upload-img img {
+    width: 100%;
+}
+
+.fb-btn {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.5em;
+    font-weight: 100;
+    background-color: #35d7bb;
+    border: 1px solid #35d7bb;
+    border-radius: 4px;
+    outline: none;
+    width: 180px;
+    height: 55px;
+    margin-top: 20px;
+    text-align: center;
+    transition: 0.2s linear all;
+}
+
+.fb-btn:hover {
+    background-color: #28caae;
+    border-color: #28caae;
+    transition: 0.2s linear all;
+}
+
+.menu-detail {
+  margin-top: 30px;
+}
+.menu-detail p {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.5em;
+    font-weight: lighter;
+}
+
+.item-detail p {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+.menu-detail hr {
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+.header, .menu-detail h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.menu-detail h3  {
+  font-size: 2em;
+}
+
+.btn-remove {
+    background: transparent;
+    border: none;
+    outline: none;
+    transition: .3s;
+    font-size: 2em;
+}
+
+.btn-remove:hover {
+    font-size: 2.5em;
+    transition: .3s;
+    background: transparent;
+}

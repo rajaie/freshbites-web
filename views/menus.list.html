@@ -1,15 +1,12 @@
-<div class="row">
+<div class="menu">
     <div class="col-md-3">
         <h2>Menus</h2>
+        <a class="add-menu" ui-sref="site.menus.list.add"><i class="fa fa-plus-circle"></i>add menu</a>
         <ul>
-            <li ng-repeat="menu in menus">
-                <a ui-sref="site.menus.list.detail({id:menu.id})">{{menu.displayName}}</a>
-                <a ng-click="deleteMenu(menu)" href="#">
-                    <span class="glyphicon glyphicon-remove-sign red" title="Delete '{{menu.displayName}}' menu"></span>
-                </a>
+            <li ng-class="{'active-menu': isSelectedMenu(menu.id)}" ng-repeat="menu in menus">
+                <a class="menu-link" ng-class="{'active-menu': isSelectedMenu(menu.id)}" ui-sref="site.menus.list.detail({id:menu.id})">{{menu.displayName}}</a>
             </li>
         </ul>
-        <a ui-sref="site.menus.list.add">Add Menu</a>
         <br />
     </div>
     <div class="col-md-9">

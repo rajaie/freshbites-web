@@ -155,7 +155,10 @@ myApp.controller('MessagesController', function($scope, $rootScope, $state, $sta
 // ***************
 // MenusController
 // ***************
-myApp.controller('MenusController', function($scope, authorizationFactory, toolsFactory, menusFactory, $stateParams, $state, $timeout) {
+myApp.controller('MenusController', function($scope, $location, authorizationFactory, toolsFactory, menusFactory, $stateParams, $state, $timeout) {
+    $scope.isSelectedMenu = function(menuId) {
+        return $location.path().split("/")[2] === menuId;
+    };
     $scope.addItem = function() {
         $scope.items.push({});
     };

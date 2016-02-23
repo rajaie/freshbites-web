@@ -1,26 +1,39 @@
-<h2>{{menu.menuName}} Menu</h2>
+<div class="menu-detail">
+    <span class="header">{{menu.menuName}} Menus</span>
+    <button class="btn btn-default btn-remove pull-right" ng-hide="$first" ng-click="deleteMenu(menu)">
+        ✕
+    </button>
+    <button class="btn btn-default btn-remove pull-right" ng-hide="$first" ui-sref="site.menus.list.edit({id:menu.id})">
+      <i class="fa fa-pencil "></i>
+    </button>
+    <br/>
+    <br/>
 
-<a ng-repeat="menuPhoto in menu.menuPhotos" ng-href="{{menuPhoto.url()}}"><img ng-src="{{menuPhoto.url()}}" class="menuPhoto" /></a>
-<br />
-Price: ${{menu.price}}
-<br />
-Description: {{menu.description}}
-<br />
-Items:
-<ul ng-repeat="item in menu.items">
-    <li><strong>{{item.itemName}}</strong></li>
-    <li>Description: {{item.itemDescription}}</li>
-    <li>Servings: {{item.servings}}</li>
-<!--     <li>Ingredients:
-        <ul>
-            <li ng-repeat="ingredient in item.ingredients">
-                {{ingredient}}
-            </li>
-            <li>Rice bowl</li>
-        </ul>
-    </li> -->
-</ul>
-<p>
-    <button class="btn btn-danger" ng-click="deleteMenu(menu)">Delete</button>
-    <button class="btn btn-primary" ui-sref="site.menus.list.edit({id:menu.id})">Edit</button>
-</p>
+    <!-- <a ng-repeat="menuPhoto in menu.menuPhotos" ng-href="{{menuPhoto.url()}}"><img ng-src="{{menuPhoto.url()}}" class="menuPhoto" /></a> -->
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb" ng-repeat="menuPhoto in menu.menuPhotos" >
+            <a class="thumbnail" ng-href="{{menuPhoto.url()}}" target="_blank">
+                <img class="img-responsive" ng-src="{{menuPhoto.url()}}">
+            </a>
+        </div>
+    </div>
+
+    <p> <b>Price:</b> ${{menu.price}} </p>
+    <p> <b>Description:</b> {{menu.description}} </p>
+    <h3> Items: </h3>
+    <hr/>
+    <div class="item-detail" ng-repeat="item in menu.items">
+      <p class="item-heading"> <strong>{{"Item # " + ($index + 1)}} {{item.itemName ? "- " + item.itemName : ""}} </strong></p>
+        <p>Description: {{item.itemDescription}}</p>
+        <p>Servings: {{item.servings}}</p>
+    <!--     <li>Ingredients:
+            <ul>
+                <li ng-repeat="ingredient in item.ingredients">
+                    {{ingredient}}
+                </li>
+                <li>Rice bowl</li>
+            </ul>
+        </li> -->
+      <hr/>
+    </div>
+</div>

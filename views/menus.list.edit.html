@@ -1,32 +1,46 @@
-<h2>Edit '{{menu.displayName}}' Menu Listing</h2>
-<div>
-    <p>Menu Name: <input type="text" ng-model="menu.menuName" /></p>
-    <p>Menu Price: <input type="text" ng-model="menu.price" /></p>
-    <p>Menu Description: <input type="text" ng-model="menu.description" placeholder="Menu Description" /></p>
+<div class="new-menu">
+  <h2>Edit '{{menu.displayName}}' Menu Listing</h2>
+  <div>
+      <p><strong>Menu Name </strong><input type="text" ng-model="menu.menuName" /></p>
+      <p><strong>Menu Price </strong><input type="text" ng-model="menu.price" /></p>
+      <p><strong>Menu Description </strong><input type="text" ng-model="menu.description" placeholder="Menu Description" /></p>
 
-    <p>Items <a href="#" ng-click="addItem()">(Add+)</a></p>
-    <fieldset ng-repeat="item in items" class="newMenuItem">
-        <div>
-        <button class="btn btn-default remove" ng-hide="$first" ng-click="removeItem($index)">
-            <span class="glyphicon glyphicon-remove-sign"></span>
-        </button>
-        <p><input type="text" ng-model="item.itemName" placeholder="Item Name" /></p>
-        <p><input type="number" ng-model="item.servings" placeholder="Item Servings" /></p>
-        <textarea rows="3" cols="40" ng-model="item.itemDescription" placeholder="Item Description" /></textarea>
-        </div>
-    </fieldset>
-    <br />
-    Images:
-    <p ng-repeat="menuPhoto in menu.menuPhotos" >
-        <a ng-href="{{menuPhoto.url()}}"><img ng-src="{{menuPhoto.url()}}" class="menuPhoto" /></a>
-        - <a href="#" ng-click="removeImage(menuPhoto)">Remove</a>
-    </p>
-    <br />
-    <br />
-    <input type="file" id="menuPhotos" ng-model="fileUpload" file-input-on-change="addImage" multiple />
-    <br />
-    <p>
-        <button class="btn btn-primary" ng-click="updateMenu(menu)">Update Menu</button>
-    </p>
+      <p class="add-item">Items <a href="#" ng-click="addItem()"><i class="fa fa-plus-circle"></i></a></p>
+      <fieldset ng-repeat="item in items" class="newMenuItem">
+          <div>
+          <p class="item-heading">
+              {{"Item # " + ($index + 1)}} {{item.itemName ? "- " + item.itemName : ""}}
+              <button class="btn btn-default remove" ng-hide="$first" ng-click="removeItem($index)">
+                  <span class="glyphicon glyphicon-remove-sign"></span>
+              </button>
+          </p>
+          <p><input type="text" ng-model="item.itemName" placeholder="Item Name" /></p>
+          <p><input type="number" ng-model="item.servings" placeholder="Item Servings" /></p>
+          <textarea rows="3" cols="40" ng-model="item.itemDescription" placeholder="Item Description" /></textarea>
+          </div>
+      </fieldset>
+      <br />
+      <div class="upload-imgs">
+          <div class="row">
+
+              <div class="col-lg-12">
+                  <p class="add-item">Images</p>
+              </div>
+
+              <div class="col-lg-3 col-md-4 col-xs-6 thumb" ng-repeat="menuPhoto in menu.menuPhotos" >
+                  <a class="thumbnail" href="#">
+                    <div class="pull-right">
+                        <button class="btn btn-default btn-remove" ng-click="removeImage(menuPhoto)"> ✕ </button>
+                    </div>
+                      <img class="img-responsive" ng-src="{{menuPhoto.url()}}">
+                  </a>
+              </div>
+          </div>
+          <input type="file" id="menuPhotos" ng-model="fileUpload" file-input-on-change="addImage" multiple />
+          <br />
+          <p>
+              <button class="fb-btn" ng-click="updateMenu(menu)">update menu</button>
+          </p>
+      </div>
+  </div>
 </div>
-

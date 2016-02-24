@@ -5,10 +5,11 @@
             <ul style="border-bottom: 3px solid black;">
             <li><strong>order date:</strong> {{order.createdAt}}</li>
             <li><strong>extra info:</strong> {{order.details}}</li>
-            <li><strong>status:</strong> {{order.status}}</li>
             <li><strong>customer name:</strong> {{order.customer}}</li>
             <li><strong>menu ordered:</strong> {{order.menuName}}</li>
-            <li><a href="#">(approve)</a> - <a href="#">(reject)</a> - <a href="#">(mark complete)</a></li>
+            <li><strong>quantity ordered:</strong> {{order.quantity}}</li>
+            <li><strong>total cost:</strong> ${{order.cost}}</li>
+            <!-- <li><a href="#">(approve)</a> - <a href="#">(reject)</a> - <a href="#">(mark complete)</a></li> -->
             </ul>
        </li>
     </ul>

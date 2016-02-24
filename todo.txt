@@ -1,0 +1,3 @@
+- Menu cover photo
+- Added "catererId" to "Feedback" table
+- Change "Messages" class to "Message", since it's a class, not really a table

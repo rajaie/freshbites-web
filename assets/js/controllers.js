@@ -82,9 +82,10 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
         user.set("name", $scope.firstlastname);
         user.set("address", $scope.address);
         user.set("phone", $scope.phone);
+        user.set("email", $scope.email);
 
         user.save().then(function(user) {
-            console.log("User profile updated successfully");
+            alert("User profile updated successfully");
             console.log(JSON.stringify(user));
             // $state.go('site.home')
             //     Parse.User.logOut().then(function() {
@@ -98,6 +99,7 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
         $scope.firstlastname = Parse.User.current().get("name");
         $scope.address = Parse.User.current().get("address");
         $scope.phone = Parse.User.current().get("phone");
+        $scope.email = Parse.User.current().get("email");
     }
 });
 
@@ -117,7 +119,7 @@ myApp.controller('MessagesController', function($scope, $rootScope, $state, $sta
     };
 
     $scope.sendMessage = function() {
-        Message = Parse.Object.extend("Message");
+        Message = Parse.Object.extend("Messages");
         message = new Message();
 
         message.set("from", Parse.User.current().get("username"));

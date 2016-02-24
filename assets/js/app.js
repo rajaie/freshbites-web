@@ -2,7 +2,7 @@ var myApp = angular.module('myApp', ['ui.router', 'angular.filter']);
 
 myApp.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
 
-    Parse.initialize("TDDsVhxFqXCHbzAcpxHiIhUuhFTUfCvIZONdTHfY", "AMWekC7CBBsD920ROCv113qrQ1bGSjdHi0QjBfme");
+    Parse.initialize("KxAs5Ob7jKiAn78k83cjllUv4BRxUFPJu0ktHZKl", "EK8a4jmt5ybAuHKTn24WVsdSeSKUeSnbqLJMH4gj");
 
     $locationProvider.html5Mode({
         enabled: true

@@ -44,14 +44,17 @@ myApp.factory('ordersFactory', function($location, menusFactory) {
         angular: 'details',
         parse: 'details'
     }, {
-        angular: 'status',
-        parse: 'status'
-    }, {
         angular: 'menuId',
         parse: 'menuId'
     }, {
         angular: 'customer',
         parse: 'customer'
+    }, {
+        angular: 'quantity',
+        parse: 'quantity'
+    }, {
+        angular: 'cost',
+        parse: 'price'
     }, {
         angular: 'caterer',
         parse: 'caterer'
@@ -69,7 +72,7 @@ myApp.factory('ordersFactory', function($location, menusFactory) {
 
     function getOrders() {
         return new Promise(function(resolve, reject) {
-            var parseOrder = Parse.Object.extend("Order");
+            var parseOrder = Parse.Object.extend("Orders");
             var query = new Parse.Query(parseOrder);
 
             query.equalTo("caterer", Parse.User.current().get("username"));
@@ -232,7 +235,7 @@ myApp.factory('messagesFactory', function($location) {
     // Get a unique list of customers who have contacted the caterer
     factory.getUniqueCustomerContacts = function() {
 
-        var parseMessage = Parse.Object.extend("Message");
+        var parseMessage = Parse.Object.extend("Messages");
         var query = new Parse.Query(parseMessage);
 
         query.select("from");
@@ -263,7 +266,7 @@ myApp.factory('messagesFactory', function($location) {
 
     factory.getMessageList = function(fromName) {
         var messageList = [];
-        var parseMessage = Parse.Object.extend("Message");
+        var parseMessage = Parse.Object.extend("Messages");
 
         var fromCustomerToCaterer = new Parse.Query(parseMessage);
         fromCustomerToCaterer.equalTo("from", fromName);

@@ -110,6 +110,7 @@ myApp.controller('MessagesController', function($scope, $rootScope, $state, $sta
     function getConversation() {
         messagesFactory.getMessageList($stateParams.customer).then(function(messages) {
             $scope.messages = messages;
+            $scope.messageId = messages[0].messageId;
             $scope.$apply();
         });
     };
@@ -125,6 +126,7 @@ myApp.controller('MessagesController', function($scope, $rootScope, $state, $sta
         message.set("from", Parse.User.current().get("username"));
         message.set("to", $stateParams.customer);
         message.set("content", $scope.reply);
+        message.set("messageId", $scope.messageId);
 
         result = message.save(null).then(
             function(message) {

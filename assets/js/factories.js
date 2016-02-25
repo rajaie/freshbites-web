@@ -208,6 +208,9 @@ myApp.factory('messagesFactory', function($location) {
         angular: 'to',
         parse: 'to'
     }, {
+        angular: 'messageId',
+        parse: 'messageId'
+    }, {
         angular: 'content',
         parse: 'content'
     }];

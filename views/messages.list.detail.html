@@ -1,16 +1,22 @@
-<h2>Conversation ({{customerName}})</h2>
-<a href="#" ng-click="refreshConversation()">Refresh</a>
-
-<ul ng-repeat="message in messages | orderBy:'createdAt'">
-    <ul style="border-bottom: 2px solid black;">
-    <li>date: {{message.createdAt}}</li>
-    <li>from: {{message.from}}</li>
-    <li>to: {{message.to}}</li>
-    <li>content: {{message.content}}</li>
-    </ul>
-</ul>
-<p>
-    <textarea rows="3" cols="40" ng-model="reply" placeholder="Reply" /></textarea>
-    <br />
-    <button class="btn btn-primary" ng-click="sendMessage()">Reply</button>
-</p>
+<div class="menu">
+  <h2 class="chat-name">Conversation ({{customerName}})</h2>
+  <a href="#" ng-click="refreshConversation()"><i class="fa fa-refresh"></i></a>
+  <!-- <ul style="border-bottom: 2px solid black;">
+  <li>date: </li>
+  <li>from: {{message.from}}</li>
+  <li>to: {{message.to}}</li>
+  <li>content: {{message.content}}</li>
+  </ul> -->
+  <div class="message" ng-repeat="message in messages | orderBy:'createdAt'">
+      <div ng-class="{'pull-right': $odd, 'pull-left': $even, 'chat-message-even': $even, 'chat-message-odd': $odd}">
+          <span><b>{{message.createdAt | date:'MM/dd/yyyy @ h:mma'}}</span></b><br/>
+          <p>{{message.content}}</p>
+      </div>
+      <br/>
+  </div>
+  <p class="chat-entry">
+      <textarea rows="5" cols="45" ng-model="reply" placeholder="Reply" /></textarea>
+      <br>
+      <button class="fb-btn" ng-click="sendMessage()">Reply</button>
+  </p>
+</div>

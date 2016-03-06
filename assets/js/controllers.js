@@ -46,6 +46,7 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
         var user = new Parse.User();
         user.set("username", $scope.username);
         user.set("password", $scope.password);
+        user.set("userRole", "caterer");
 
         user.signUp().then(
             function(user) {
@@ -192,6 +193,7 @@ myApp.controller('MenusController', function($scope, $location, authorizationFac
         menu.set("description", $scope.menuDescription);
         menu.set("items", menuItems);
         menu.set("menuPhotos", $scope.menu.menuPhotos);
+        menu.set("menuCover", $scope.menu.menuPhotos[0]);
 
         menusFactory.saveMenu(menu).then(function(menu) {
             $scope.$parent.menus.push(menu);

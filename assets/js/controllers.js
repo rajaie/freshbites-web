@@ -109,11 +109,26 @@ myApp.controller('SessionController', function($scope, $state, authorizationFact
 // ***************
 myApp.controller('MessagesController', function($scope, $rootScope, $state, $stateParams, messagesFactory, $location) {
     function getConversation() {
-        messagesFactory.getMessageList($stateParams.customer).then(function(messages) {
+        return messagesFactory.getMessageList($stateParams.customer).then(function(messages) {
             $scope.messages = messages;
             $scope.messageId = messages[0].messageId;
             $scope.$apply();
         });
+    };
+
+    /* Set up long polling to check for new messages
+       call longPoll recursively in the callback
+       this ensures that the previous call has completed
+       before a new call is issued, preventing out-of-order
+       delivery of messages. We use setTimeout to limit the polling
+       rate, else the TCP stack would blow up */
+    function longPoll() {
+        setTimeout(function() {
+            $scope.refreshConversation(function() {
+                console.log("got server response!");
+                longPoll();
+            });
+        }, 1000);
     };
 
     $scope.getClassByUserType = function(user) {
@@ -121,8 +136,8 @@ myApp.controller('MessagesController', function($scope, $rootScope, $state, $sta
         return isCurrentUser ? ["pull-right", "chat-message-odd"] : ["pull-left", "chat-message-even"];
     }
 
-    $scope.refreshConversation = function() {
-        getConversation();
+    $scope.refreshConversation = function(cb) {
+        getConversation().then(cb);
     };
 
     $scope.sendMessage = function() {
@@ -157,7 +172,7 @@ myApp.controller('MessagesController', function($scope, $rootScope, $state, $sta
     customer = $stateParams.customer;
 
     if (customer !== undefined) {
-        getConversation();
+        getConversation().then(longPoll);
     }
 
 });

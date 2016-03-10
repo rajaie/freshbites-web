@@ -63,6 +63,7 @@
     font-size: 1.5em;
     outline: none;
     font-weight: 300;
+    vertical-align: middle;
 }
 
 .new-menu p input:focus, .new-menu textarea:focus{
@@ -146,6 +147,10 @@
 .item-detail p {
     font-family: 'Lato', sans-serif;
     font-weight: 300;
+}
+
+.item {
+    margin-top: 30px;
 }
 
 .menu-detail hr {

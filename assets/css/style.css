@@ -7,6 +7,10 @@ body {
     height: 100%;
 }
 
+label{
+    display:inline-block;
+    width: 150px;
+}
 
 /* new styles */
 .intro {

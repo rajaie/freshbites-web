@@ -18,6 +18,7 @@ myApp.controller('SiteController', function($scope, $rootScope, $state, authoriz
 // ****************
 myApp.controller('OrdersController', function($scope, $rootScope, $state, ordersFactory, $location) {
     ordersFactory.getOrdersWithMenuNames().then(function(orders) {
+        console.log('orders', orders);
         $scope.orders = orders;
         $scope.$apply();
     }, function(error) {

@@ -116,6 +116,11 @@ myApp.controller('MessagesController', function($scope, $rootScope, $state, $sta
         });
     };
 
+    $scope.getClassByUserType = function(user) {
+        var isCurrentUser = (user === $rootScope.currentUser.username);
+        return isCurrentUser ? ["pull-right", "chat-message-odd"] : ["pull-left", "chat-message-even"];
+    }
+
     $scope.refreshConversation = function() {
         getConversation();
     };

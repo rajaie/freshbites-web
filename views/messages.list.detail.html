@@ -8,7 +8,7 @@
   <li>content: {{message.content}}</li>
   </ul> -->
   <div class="message" ng-repeat="message in messages | orderBy:'createdAt'">
-      <div ng-class="{'pull-right': $odd, 'pull-left': $even, 'chat-message-even': $even, 'chat-message-odd': $odd}">
+      <div ng-class="getClassByUserType(message.from)">
           <span><b>{{message.createdAt | date:'MM/dd/yyyy @ h:mma'}}</span></b><br/>
           <p>{{message.content}}</p>
       </div>

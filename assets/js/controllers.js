@@ -36,6 +36,19 @@ myApp.controller('ReviewsController', function($scope, $rootScope, $state, revie
     }, function(error) {
         console.log("Failed to get reviews list");
     });
+
+    $scope.getIconClass = function(starOrNah) {
+        return starOrNah ? 'fa-star' : 'fa-star-o'
+    }
+
+    $scope.getNumStars = function(numStars) {
+        var stars = [];
+        for (var i = 0; i < 5; i++) {
+            stars.push((--numStars) > 0);
+        }
+
+        return stars;
+    }
 });
 
 // *****************

@@ -1,16 +1,29 @@
-<div>
+<div class="reviews">
     <h2>Reviews</h2>
-    filterby menu name:
+    <span id="filter-label"> Filter by menu name: </span>
     <input type="text" ng-model="query">
-    <ul>
+    <ul class="container">
         <li ng-repeat="review in reviews | filter:{menuName:query} | orderBy:'orderQuery'">
-            <ul style="border-bottom: 3px solid black;">
-            <li><strong>review date:</strong> {{review.createdAt}}</li>
-            <li><strong>review:</strong> {{review.opinion}}</li>
-            <li><strong>rating:</strong> {{review.numberOfStars}}/5</li>
-            <li><strong>customer name:</strong> {{review.customerName}}</li>
-            <li><strong>menu ordered:</strong> {{review.menuName}}</li>
-            </ul>
+            <div class="panel" ng-class="{'panel-info': $odd, 'panel-success': $even}">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                      {{review.customerName}} @
+                      {{review.createdAt | date:'MM/dd/yyyy'}}
+                  </h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                      <strong>rating:</strong>
+                      <span class="stars">
+                          <span ng-repeat="star in getNumStars(review.numberOfStars) track by $index">
+                              <i class="fa" ng-class="getIconClass(star)"></i>
+                          </span>
+                      </span>
+                    </p>
+                    <p> <strong>menu ordered:</strong> {{review.menuName}} </p>
+                    <p> <strong>comments:</strong> {{review.opinion}} </p>
+                </div>
+            </div>
        </li>
     </ul>
 </div>

@@ -4,10 +4,14 @@
         <li ng-repeat="order in orders">
             <div class="panel" ng-class="{'panel-info': $odd, 'panel-success': $even}">
                 <div class="panel-heading">
-                  <h3 class="panel-title">
+                  <span class="panel-title">
                       {{order.customer}} @
                       {{order.createdAt | date:'MM/dd/yyyy'}}
-                  </h3>
+                  </span>
+                  <div class="fulfilled pull-right">
+                      <span ng-show="order.fulfilled"> Fulfilled </span>
+                      <i ng-class="{'unfulfilled-check': !order.fulfilled}" ng-click="fulfill(order)" class="fa fa-check"></i>
+                  </div>
                 </div>
                 <div class="panel-body">
                     <p> <strong>menu:</strong> {{order.menuName}} </p>

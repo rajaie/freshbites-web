@@ -58,6 +58,9 @@ myApp.factory('ordersFactory', function($location, menusFactory) {
     }, {
         angular: 'caterer',
         parse: 'caterer'
+    }, {
+        angular: 'fulfilled',
+        parse: 'fulfilled'
     }];
 
     function GettersAndSetters(results) {

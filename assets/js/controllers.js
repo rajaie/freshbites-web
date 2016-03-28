@@ -19,11 +19,26 @@ myApp.controller('SiteController', function($scope, $rootScope, $state, authoriz
 myApp.controller('OrdersController', function($scope, $rootScope, $state, ordersFactory, $location) {
     ordersFactory.getOrdersWithMenuNames().then(function(orders) {
         console.log('orders', orders);
-        $scope.orders = orders;
+        $scope.orders = orders.sort((a, b) => b.createdAt - a.createdAt);
         $scope.$apply();
     }, function(error) {
         console.log("Failed to get orders list");
     });
+
+    $scope.fulfill = function fulfill(order) {
+        if (order.fulfilled) {
+            alert("Already fulfilled!");
+            return;
+        }
+
+        order.set("fulfilled", true);
+        order.save().then(function(order) {
+            alert("successfully fulfilled order!");
+        }, function(error) {
+            console.log('Failed to save Order object. Error message: ' + error.message);
+        });
+    }
+
 });
 
 // ****************

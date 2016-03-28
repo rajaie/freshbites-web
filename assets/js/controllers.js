@@ -30,7 +30,7 @@ myApp.controller('OrdersController', function($scope, $rootScope, $state, orders
             toastr.error("Already fulfilled!");
             return;
         }
-        
+
         order.set("fulfilled", true);
         order.save().then(function(order) {
             toastr.success("Successfully fulfilled order!");
@@ -46,7 +46,7 @@ myApp.controller('OrdersController', function($scope, $rootScope, $state, orders
 // ****************
 myApp.controller('ReviewsController', function($scope, $rootScope, $state, reviewsFactory, $location) {
     reviewsFactory.getReviewsWithMenuNames().then(function(reviews) {
-        $scope.reviews = reviews;
+        $scope.reviews = reviews.sort((a, b) => b.createdAt - a.createdAt);
         $scope.menuFilter = "";
         $scope.$apply();
     }, function(error) {
@@ -54,13 +54,14 @@ myApp.controller('ReviewsController', function($scope, $rootScope, $state, revie
     });
 
     $scope.getIconClass = function(starOrNah) {
+        console.log('starOrNah->', starOrNah);
         return starOrNah ? 'fa-star' : 'fa-star-o'
     }
 
     $scope.getNumStars = function(numStars) {
         var stars = [];
         for (var i = 0; i < 5; i++) {
-            stars.push((--numStars) > 0);
+            stars.push((numStars--) > 0);
         }
 
         return stars;

@@ -14,7 +14,7 @@ label{
 
 /* new styles */
 .intro {
-  padding-top: 30px;
+  padding-top: 18px;
   padding-left: 30px;
   color: black;
   box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
@@ -58,7 +58,14 @@ label{
 }
 
 .fb-logo {
-    padding-bottom: 20px;
+    background-image: url('../img/logo.png');
+    padding: 13px 0 20px 88px;
+    background-position: -80px -13px;
+    background-size: 71px;
+    background-repeat: no-repeat;
+    margin-top: -1px;
+    background-origin: content-box;
+    line-height: 48px;
 }
 
 /* end new styles */

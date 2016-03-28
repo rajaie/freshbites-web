@@ -7,12 +7,16 @@
         <script src="assets/js/dependencies/jquery-2.1.4.min.js"></script>
         <script src="assets/js/dependencies/angular.js"></script>
         <script src="assets/js/dependencies/angular-filter.js"></script>
+        <script src="assets/js/dependencies/angular-animate.min.js"></script>
         <script src="assets/js/dependencies/angular-ui-router.min.js"></script>
         <script src="assets/js/dependencies/bootstrap.min.js"></script>
+        <script src="assets/js/dependencies/angular-toastr.min.js"></script>
+        <script src="assets/js/dependencies/angular-toastr.tpls.min.js"></script>
         <script src="assets/js/app.js"></script>
         <script src="assets/js/controllers.js"></script>
         <script src="assets/js/factories.js"></script>
         <script src="assets/js/directives.js"></script>
+        <link rel="stylesheet" href="assets/css/angular-toastr.min.css">
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
@@ -35,7 +39,7 @@
               <!-- logo -->
               <a class="fb-logo pull-left" href="/"> FRESHBITES </a>
               <!-- navigation bar -->
-              <ul class="pull-right">
+              <ul class="menu-bar pull-right">
                 <li ui-sref-active='active' ng-hide="currentUser"><a ui-sref="site.register">Register</a></li>
                 <li ui-sref-active='active' ng-hide="currentUser"><a ui-sref="site.login">Log in</a></li>
                 <li ui-sref-active='active' ng-show="currentUser"><a ui-sref="site.menus.list">Menus</a></li>

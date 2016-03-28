@@ -16,10 +16,11 @@
                 <div class="panel-body">
                     <p> <strong>menu:</strong> {{order.menuName}} </p>
                     <p> <strong>quantity:</strong> {{order.quantity}} </p>
-                    <p> <strong>total cost:</strong> {{order.cost}} </p>
+                    <p> <strong>total cost:</strong> ${{order.cost}} </p>
                     <p> <strong>extra info:</strong> {{order.details}} </p>
                 </div>
             </div>
        </li>
+       <h1 class="no-orders" ng-show="!orders.length"> You don't have any orders </h1>
     </ul>
 </div>

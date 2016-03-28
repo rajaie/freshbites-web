@@ -16,7 +16,7 @@ myApp.controller('SiteController', function($scope, $rootScope, $state, authoriz
 // ****************
 // OrdersController
 // ****************
-myApp.controller('OrdersController', function($scope, $rootScope, $state, ordersFactory, $location) {
+myApp.controller('OrdersController', function($scope, $rootScope, $state, ordersFactory, toastr, $location) {
     ordersFactory.getOrdersWithMenuNames().then(function(orders) {
         console.log('orders', orders);
         $scope.orders = orders.sort((a, b) => b.createdAt - a.createdAt);
@@ -27,13 +27,13 @@ myApp.controller('OrdersController', function($scope, $rootScope, $state, orders
 
     $scope.fulfill = function fulfill(order) {
         if (order.fulfilled) {
-            alert("Already fulfilled!");
+            toastr.error("Already fulfilled!");
             return;
         }
-
+        
         order.set("fulfilled", true);
         order.save().then(function(order) {
-            alert("successfully fulfilled order!");
+            toastr.success("Successfully fulfilled order!");
         }, function(error) {
             console.log('Failed to save Order object. Error message: ' + error.message);
         });

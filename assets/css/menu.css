@@ -229,3 +229,18 @@
     display: inline-block;
     padding-right: 15px;
 }
+
+.no-messages {
+    margin-top: 250px;
+    font-size: 3em;
+    font-weight: 200;
+    font-family: 'Raleway', sans-serif;
+}
+
+.no-orders {
+    margin-top: 150px;
+    text-align: center;
+    font-size: 3em;
+    font-weight: 200;
+    font-family: 'Raleway', sans-serif;
+}
